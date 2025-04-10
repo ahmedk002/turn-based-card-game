@@ -14,6 +14,8 @@ Scrum Master: Riley Chen
 Product Owner: Nathan Ramkissoon
 
 Developer: Muhammed Ahmed
+* Class of 2026
+* Major: Computer Science and Film/Media Studies
 
 Developer: Junbo Feng
 
