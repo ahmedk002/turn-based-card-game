@@ -8,6 +8,8 @@ Semester: Spring 2025
 
 ## Team Information
 Scrum Master: Riley Chen
+* Class of 2028
+* Major: Computer Science/Political Science
 
 Product Owner: Nathan Ramkissoon
 
