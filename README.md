@@ -20,6 +20,8 @@ Developer: Muhammed Ahmed
 * Major: Computer Science and Film/Media Studies
 
 Developer: Junbo Feng
+* Class of 2027
+* Major: Computer Science and Engineering
 
 ## Project Information
 *A turn-based card game where you navigate an overworld and defeat enemies.*
