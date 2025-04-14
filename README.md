@@ -12,19 +12,19 @@ Scrum Master: Riley Chen
 * Major: Computer Science/Political Science
 
 Product Owner: Nathan Ramkissoon
+* Class of 2028
+* Major: Computer Science and Engineering
 
 Developer: Muhammed Ahmed
 * Class of 2026
 * Major: Computer Science and Film/Media Studies
 
 Developer: Junbo Feng
-
-*List 1-2 relevant sentences about each member, including year
-and major*
+* Class of 2027
+* Major: Computer Science and Engineering
 
 ## Project Information
-*Write a few sentences about your project. This can be done
-later, as you may not quite know all the details yet.*
+*A turn-based card game where you navigate an overworld and defeat enemies.*
 
 ## How to run it
 *IMPORTANT - Update this with information about how to build
