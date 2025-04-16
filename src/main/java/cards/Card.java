@@ -21,7 +21,6 @@ public abstract class Card {
     private String name;
     private String image;
     private final CardType cardType;
-    private final CardEffect cardEffect;
     private boolean reusable;
 
     /**
@@ -29,14 +28,12 @@ public abstract class Card {
      * @param name a String for the name of the object.
      * @param image a String for the image file representing the card.
      * @param type the type of card that the new object is of, as an enum.
-     * @param effect the effect that the card will have.
      * @param reusable boolean for whether the card is reusable.
      */
-    public Card(String name, String image, CardType type, CardEffect effect, boolean reusable) {
+    public Card(String name, String image, CardType type, boolean reusable) {
         this.name = name;
         this.image = image;
         this.cardType = type;
-        this.cardEffect = effect;
         this.reusable = reusable;
     }
 

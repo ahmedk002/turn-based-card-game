@@ -18,9 +18,13 @@
 package cards;
 
 public class StatusCard extends Card {
-    private static final boolean IS_REUSABLE = true;
+    private final CardEffect effect;
 
-    public StatusCard(String name, String image, CardType type, CardEffect effect) {
-        super(name, image, type, effect, IS_REUSABLE);
+    private static final boolean IS_REUSABLE = true;
+    private static final CardType cardType = CardType.STATUS;
+
+    public StatusCard (String name, String image, CardType type, CardEffect effect) {
+        super(name, image, type, IS_REUSABLE);
+        this.effect = effect;
     }
 }

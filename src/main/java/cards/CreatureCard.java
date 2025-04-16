@@ -20,10 +20,20 @@ package cards;
 import creature.Creature;
 
 public class CreatureCard extends AttackCard {
+    private static final CardType cardType = CardType.CREATURE;
     private final int health;
 
-    public CreatureCard(String name, String image, CardType type, CardEffect effect, int damage, int health) {
-        super(name, image, type, effect, damage);
+    /**
+     * Constructor to create a new creature card.
+     * @param name a String representing the name of the card. Will be passed to the
+     *             Card constructor.
+     * @param image a String representing the image of the card. Will be passed to the
+     *              Card constructor.
+     * @param damage the amount of damage dealt by the creature in a single hit, as an int.
+     * @param health the max health of the creature, as an int.
+     */
+    public CreatureCard(String name, String image, int damage, int health) {
+        super(name, image, damage, cardType);
         this.health = health;
     }
 
