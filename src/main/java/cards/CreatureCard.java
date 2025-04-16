@@ -20,7 +20,7 @@ package cards;
 import creature.Creature;
 
 public class CreatureCard extends AttackCard {
-    private int health;
+    private final int health;
 
     public CreatureCard(String name, String image, CardType type, CardEffect effect, int damage, int health) {
         super(name, image, type, effect, damage);

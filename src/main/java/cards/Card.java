@@ -43,4 +43,12 @@ public abstract class Card {
     public String getName() {
         return name;
     }
+
+    public void makeNonReusable() throws IllegalArgumentException {
+        if (this.cardType != CardType.STATUS) {
+            throw new IllegalArgumentException("Method called on invalid instance. Only "
+                    + "status cards should have variable reusability");
+        }
+        reusable = false;
+    }
 }

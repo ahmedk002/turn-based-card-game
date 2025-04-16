@@ -4,11 +4,11 @@
  *
  * Name: Riley Chen
  * Date: 4/16/2025
- * Time: 2:13 PM
+ * Time: 3:00 PM
  *
  * Project: csci205_final_project
  * Package: cards
- * Class: AttackCard
+ * Class: StatusCard
  *
  * Description:
  *
@@ -17,16 +17,10 @@
 
 package cards;
 
-public class AttackCard extends Card {
-    private final int damage;
-    private static final boolean IS_REUSABLE = false;
+public class StatusCard extends Card {
+    private static final boolean IS_REUSABLE = true;
 
-    public AttackCard(String name, String image, CardType type, CardEffect effect, int damage) {
+    public StatusCard(String name, String image, CardType type, CardEffect effect) {
         super(name, image, type, effect, IS_REUSABLE);
-        this.damage = damage;
-    }
-
-    public int useAttackCard() {
-        return damage;
     }
 }
