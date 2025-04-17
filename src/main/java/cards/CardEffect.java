@@ -1,13 +1,13 @@
 package cards;
 
 public enum CardEffect {
-    DECREASE_LOW("D1"),
-    DECREASE_MED("D5"),
+    DECREASE_LOW("D2"),
+    DECREASE_MED("D6"),
     DECREASE_HIGH("D10"),
-    INCREASE_LOW("I1"),
+    INCREASE_LOW("I2"),
     INCREASE_MED("I5"),
     INCREASE_HIGH("I10"),
-    HEAL_LOW("H1"),
+    HEAL_LOW("H2"),
     HEAL_MED("H5"),
     HEAL_HIGH("H10");
 
@@ -22,13 +22,16 @@ public enum CardEffect {
     }
 
     public String toString() {
-        String description = switch (effect.charAt(0)) {
+        return getEffect() + getStrength();
+    }
+
+    public String getEffect() {
+        return switch (effect.charAt(0)) {
             case 'D' -> "damage decreases";
             case 'I' -> "damage increases";
             case 'H' -> "heals";
             default -> "";
-        } + getStrength();
-        return description;
+        };
     }
 
     public String getStrength() {
@@ -42,7 +45,7 @@ public enum CardEffect {
         }
     }
 
-    public int getEffect() {
+    public int getStrengthValue() {
         return Integer.parseInt(effect.substring(1));
     }
 }
