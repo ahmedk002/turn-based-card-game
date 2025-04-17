@@ -22,13 +22,16 @@ public enum CardEffect {
     }
 
     public String toString() {
-        String description = switch (effect.charAt(0)) {
+        return getEffectDescription() + getStrength();
+    }
+
+    public String getEffectDescription() {
+        return switch (effect.charAt(0)) {
             case 'D' -> "damage decreases";
             case 'I' -> "damage increases";
             case 'H' -> "heals";
             default -> "";
         } + getStrength();
-        return description;
     }
 
     public String getStrength() {
