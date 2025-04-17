@@ -17,8 +17,7 @@
 
 package game;
 
-import cards.Card;
-import cards.CardType;
+import cards.*;
 import creature.Creature;
 
 import java.util.ArrayList;
@@ -79,13 +78,16 @@ public class Player {
         int damageNumber = 0;
         switch (usedCard.getType()) {
             case CardType.STATUS:
-                usedCard.useStatusCard(summonedCreatures);
+                StatusCard usedStatusCard = (StatusCard) usedCard;
+                usedStatusCard.useStatusCard(summonedCreatures);
                 break;
             case CardType.ATTACK:
-                damageNumber = usedCard.useAttackCard();
+                AttackCard usedAttackCard = (AttackCard) usedCard;
+                damageNumber = usedAttackCard.useAttackCard();
                 break;
             case CardType.CREATURE:
-                Creature creature = usedCard.useCreatureCard();
+                CreatureCard usedCreatureCard = (CreatureCard) usedCard;
+                Creature creature = usedCreatureCard.useCreatureCard();
                 summonedCreatures.add(creature);
                 break;
             default:
