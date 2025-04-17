@@ -55,7 +55,7 @@ public class StatusCard extends Card {
             System.out.println("Would you like to apply a maximum strength effect? [Y/N]\n"
                     + "WARNING!!! This will destroy the card. ");
             String input = sc.nextLine().toUpperCase();
-            while (!validInput(input)) {
+            while (!validInput(input.substring(0, 1))) {
                 System.out.println("Invalid input! Try again.");
                 input = sc.nextLine().toUpperCase();
             }
@@ -126,6 +126,12 @@ public class StatusCard extends Card {
         }
     }
 
+    /**
+     * Helper method to validate input from the Scanner call.
+     * @param input a single character String that should be either "Y" or "N".
+     * @return true if the input is either "Y" or "N", and false otherwise.
+     * @author Riley
+     */
     private boolean validInput(String input) {
         if (input.equals("Y") || input.equals("N")) {
             return true;
