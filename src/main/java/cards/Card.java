@@ -49,7 +49,7 @@ public abstract class Card {
         reusable = false;
     }
 
-    public CardType getCardType() {
+    public CardType getType() {
         return cardType;
     }
 }
