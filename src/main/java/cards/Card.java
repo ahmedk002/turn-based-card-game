@@ -29,6 +29,7 @@ public abstract class Card {
      * @param image a String for the image file representing the card.
      * @param type the type of card that the new object is of, as an enum.
      * @param reusable boolean for whether the card is reusable.
+     * @author Riley
      */
     public Card(String name, String image, CardType type, boolean reusable) {
         this.name = name;

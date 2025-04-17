@@ -36,6 +36,14 @@ public class StatusCard extends Card {
         sc = new Scanner(System.in);
     }
 
+    /**
+     * Uses a status card to apply an upgrade to each one of the player's creatures.
+     *     If this is the first use, the function first asks if the player wants to
+     *     apply a strong or moderate effect. The strong effect results in the card
+     *     being immediately destroyed, while the moderate effect is half-strength but
+     *     the card is not destroyed.
+     * @param creatureList the list of creatures that the player has.
+     */
     public void useStatusCard(List<Creature> creatureList) {
         if (!used) {
             /*
@@ -73,14 +81,14 @@ public class StatusCard extends Card {
         applyEffect(creatureList, upgrade, strength);
     }
 
-    private void applyEffect(List<Creature> creatureList, String upgrade, int strength) {
+    private void applyEffect(List<Creature> creatureList, String upgrade, int strength)
+            throws IllegalArgumentException {
         for (Creature creature : creatureList) {
-            if (upgrade.equals("damage decreases")) {
-                creature.getDamage() -= strength;
-            } else if (upgrade.equals("damage increases")) {
-                creature.getDamage() += strength;
-            } else if (upgrade.equals("heals")) {
-                creature.getHealth() += strength;
+            switch (upgrade) {
+                case "damage decreases" -> creature.getDamage() -= strength;
+                case "damage increases" -> creature.getDamage() += strength;
+                case "heals" -> creature.getHealth() += strength;
+                default -> throw new IllegalArgumentException("Unknown upgrade: " + upgrade);
             }
         }
     }
