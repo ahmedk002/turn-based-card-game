@@ -48,4 +48,8 @@ public abstract class Card {
         }
         reusable = false;
     }
+
+    public CardType getCardType() {
+        return cardType;
+    }
 }
