@@ -18,6 +18,7 @@
 package game;
 
 import cards.Card;
+import cards.CardType;
 import creature.Creature;
 
 import java.util.ArrayList;
@@ -31,14 +32,14 @@ public class Player {
     private boolean isAlive;
     private final List<Card> currentHand;
     private final Queue<Card> playerDeck;
-    private final List<Creature> summonedCreatres;
+    private final List<Creature> summonedCreatures;
 
     public Player(int maxHealth) {
         currentHealth = maxHealth;
         isAlive = true;
         currentHand = new ArrayList<>();
         playerDeck = new LinkedList<>();
-        summonedCreatres = new ArrayList<>();
+        summonedCreatures = new ArrayList<>();
     }
 
     public void givePlayerCard(List<Card> cardsList) {
@@ -57,7 +58,7 @@ public class Player {
         }
     }
 
-    public boolean checkIfAlive() {
+    public boolean getIfAlive() {
         return isAlive;
     }
 
@@ -65,18 +66,27 @@ public class Player {
         return playerDeck;
     }
 
+    public void takeDamage(int recievedDamage) {
+        if (currentHealth - recievedDamage > 0) {
+            currentHealth -= recievedDamage;
+        } else {
+            currentHealth = 0;
+            isAlive = false;
+        }
+    }
+
     public int useCard(Card usedCard) {
         int damageNumber = 0;
         switch (usedCard.getType()) {
-            case Card.STATUS:
-                usedCard.useStatusCard(summonedCreatres);
+            case CardType.STATUS:
+                usedCard.useStatusCard(summonedCreatures);
                 break;
-            case Card.ATTACK:
+            case CardType.ATTACK:
                 damageNumber = usedCard.useAttackCard();
                 break;
-            case Card.CREATURE:
+            case CardType.CREATURE:
                 Creature creature = usedCard.useCreatureCard();
-                summonedCreatres.add(creature);
+                summonedCreatures.add(creature);
                 break;
             default:
                 System.out.println("Card has invalid type");
