@@ -29,6 +29,7 @@ public abstract class Card {
      * @param image a String for the image file representing the card.
      * @param type the type of card that the new object is of, as an enum.
      * @param reusable boolean for whether the card is reusable.
+     * @author Riley
      */
     public Card(String name, String image, CardType type, boolean reusable) {
         this.name = name;
@@ -37,10 +38,13 @@ public abstract class Card {
         this.reusable = reusable;
     }
 
-    public String getName() {
-        return name;
-    }
-
+    /**
+     * Method used by StatusCard to set a card to non-reusable. Used when a player chooses
+     *     to "burn" an upgrade on its first use to apply the full effect.
+     * @throws IllegalArgumentException thrown if the card is not a StatusCard. Only StatusCards
+     *     should have variable reusability.
+     * @author Riley
+     */
     public void makeNonReusable() throws IllegalArgumentException {
         if (this.cardType != CardType.STATUS) {
             throw new IllegalArgumentException("Method called on invalid instance. Only "
@@ -51,5 +55,9 @@ public abstract class Card {
 
     public CardType getType() {
         return cardType;
+    }
+
+    public String getName() {
+        return name;
     }
 }

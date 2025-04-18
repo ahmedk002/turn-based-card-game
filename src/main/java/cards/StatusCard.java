@@ -29,13 +29,23 @@ public class StatusCard extends Card {
     private static final boolean IS_REUSABLE = true;
     private static final CardType cardType = CardType.STATUS;
 
-    public StatusCard (String name, String image, CardType type, CardEffect effect) {
-        super(name, image, type, IS_REUSABLE);
+    public StatusCard (String name, String image, CardEffect effect) {
+        super(name, image, cardType, IS_REUSABLE);
         this.effect = effect;
         used = false;
         sc = new Scanner(System.in);
     }
 
+    /**
+     * Uses a status card to apply an upgrade to each one of the player's creatures.
+     *     If this is the first use, the function first asks if the player wants to
+     *     apply a strong or moderate effect. The strong effect results in the card
+     *     being immediately destroyed, while the moderate effect is half-strength but
+     *     the card is not destroyed.
+     *     Uses helper methods to get the effect and apply it to each creature.
+     * @param creatureList the list of creatures that the player has.
+     * @author Riley
+     */
     public void useStatusCard(List<Creature> creatureList) {
         if (!used) {
             /*
@@ -45,7 +55,7 @@ public class StatusCard extends Card {
             System.out.println("Would you like to apply a maximum strength effect? [Y/N]\n"
                     + "WARNING!!! This will destroy the card. ");
             String input = sc.nextLine().toUpperCase();
-            while (!validInput(input)) {
+            while (!validInput(input.substring(0, 1))) {
                 System.out.println("Invalid input! Try again.");
                 input = sc.nextLine().toUpperCase();
             }
@@ -55,36 +65,73 @@ public class StatusCard extends Card {
                 makeNonReusable();
                 applyStrongEffect(creatureList);
             } else {
+                //Apply the moderate effect.
                 applyModerateEffect(creatureList);
             }
+            used = true;
+        } else {
+            applyModerateEffect(creatureList);
         }
-        applyModerateEffect(creatureList);
     }
 
+    /**
+     * Gets the details and strength of the status card's effect.
+     *     Upgrade -> gotten from the getEffect() method. May be a damage upgrade, a
+     *     damage nerf, or a heal.
+     *     Strength -> the strength of the upgrade, gotten from the getStrengthValue() method.
+     *     applyEffect() -> another helper method that will apply the effect to each creature.
+     * @param creatureList the list of creatures that the effect will be applied to.
+     * @author Riley
+     */
     private void applyStrongEffect(List<Creature> creatureList) {
         String upgrade = effect.getEffect();
         int strength = effect.getStrengthValue();
         applyEffect(creatureList, upgrade, strength);
     }
 
+    /**
+     * Gets the details and strength of the status card's effect.
+     *     Upgrade -> gotten from the getEffect() method. May be a damage upgrade, a
+     *     damage nerf, or a heal.
+     *     Strength -> the strength of the upgrade, gotten from the getStrengthValue() method.
+     *     The strength is half of what the method returns, since it is only a moderate effect.
+     *     applyEffect() -> another helper method that will apply the effect to each creature.
+     * @param creatureList the list of creatures that the effect will be applied to.
+     * @author Riley
+     */
     private void applyModerateEffect(List<Creature> creatureList) {
         String upgrade = effect.getEffect();
         int strength= effect.getStrengthValue() / 2;
         applyEffect(creatureList, upgrade, strength);
     }
 
-    private void applyEffect(List<Creature> creatureList, String upgrade, int strength) {
+    /**
+     * Applies the effect and strength to the creatures in the list.
+     * @param creatureList the list of creatures that will be affected by the upgrade.
+     * @param upgrade a String explaining what the effect does.
+     * @param strength an int representing the strength of the effect.
+     * @throws IllegalArgumentException if the upgrade String is not one of the three possible
+     *     upgrades.
+     * @author Riley
+     */
+    private void applyEffect(List<Creature> creatureList, String upgrade, int strength)
+            throws IllegalArgumentException {
         for (Creature creature : creatureList) {
-            if (upgrade.equals("damage decreases")) {
-                creature.getDamage() -= strength;
-            } else if (upgrade.equals("damage increases")) {
-                creature.getDamage() += strength;
-            } else if (upgrade.equals("heals")) {
-                creature.getHealth() += strength;
+            switch (upgrade) {
+                case "damage decreases" -> creature.getDamage() -= strength;
+                case "damage increases" -> creature.getDamage() += strength;
+                case "heals" -> creature.getHealth() += strength;
+                default -> throw new IllegalArgumentException("Unknown upgrade: " + upgrade);
             }
         }
     }
 
+    /**
+     * Helper method to validate input from the Scanner call.
+     * @param input a single character String that should be either "Y" or "N".
+     * @return true if the input is either "Y" or "N", and false otherwise.
+     * @author Riley
+     */
     private boolean validInput(String input) {
         if (input.equals("Y") || input.equals("N")) {
             return true;
