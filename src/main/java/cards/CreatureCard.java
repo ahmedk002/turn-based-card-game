@@ -31,6 +31,7 @@ public class CreatureCard extends AttackCard {
      *              Card constructor.
      * @param damage the amount of damage dealt by the creature in a single hit, as an int.
      * @param health the max health of the creature, as an int.
+     * @author Riley
      */
     public CreatureCard(String name, String image, int damage, int health) {
         super(name, image, damage, cardType);
@@ -41,6 +42,7 @@ public class CreatureCard extends AttackCard {
      * Uses a creature card to spawn a creature with the name, damage, and health attributes
      *     stored by the card.
      * @return the new Creature card.
+     * @author Riley
      */
     public Creature useCreatureCard() {
         Creature creature = new Creature(this.getName(), this.getDamage(), health);

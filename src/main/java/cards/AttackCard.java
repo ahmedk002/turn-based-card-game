@@ -30,6 +30,7 @@ public class AttackCard extends Card {
      * @param image a String representing the image of the card. Will be passed to the
      *              Card constructor.
      * @param damage the amount of damage this card will deal, as an int.
+     * @author Riley
      */
     public AttackCard(String name, String image, int damage) {
         super(name, image, cardType, IS_REUSABLE);
@@ -44,6 +45,7 @@ public class AttackCard extends Card {
      *              Card constructor.
      * @param damage the amount of damage dealt by the creature in a single hit, as an int.
      * @param type a CardType object representing the type of card. Should be CREATURE.
+     * @author Riley
      */
     public AttackCard(String name, String image, int damage, CardType type) {
         super(name, image, type, IS_REUSABLE);
@@ -51,7 +53,7 @@ public class AttackCard extends Card {
     }
 
     public int useAttackCard() {
-        return damage;
+        return getDamage();
     }
 
     public int getDamage() {
