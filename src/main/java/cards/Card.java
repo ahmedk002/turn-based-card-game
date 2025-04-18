@@ -18,8 +18,8 @@
 package cards;
 
 public abstract class Card {
-    private String name;
-    private String image;
+    private final String name;
+    private final String image;
     private final CardType cardType;
     private boolean reusable;
 
@@ -60,4 +60,6 @@ public abstract class Card {
     public String getName() {
         return name;
     }
+
+    public String getImage() { return image; }
 }

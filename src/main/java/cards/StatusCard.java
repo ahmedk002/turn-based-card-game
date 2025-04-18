@@ -30,7 +30,7 @@ public class StatusCard extends Card {
     private static final CardType cardType = CardType.STATUS;
 
     public StatusCard (String name, String image, CardType type, CardEffect effect) {
-        super(name, image, type, IS_REUSABLE);
+        super(name, image, cardType, IS_REUSABLE);
         this.effect = effect;
         used = false;
         sc = new Scanner(System.in);
