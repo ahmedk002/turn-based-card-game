@@ -29,14 +29,7 @@ public class StatusCard extends Card {
     private static final boolean IS_REUSABLE = true;
     private static final CardType cardType = CardType.STATUS;
 
-    /**
-     * Create a new StatusCard object.
-     * @param name the String representing the name of the item.
-     * @param image the String for the image of the card.
-     * @param effect the effect the card will have, as a CardEffect enum.
-     * @author Riley
-     */
-    public StatusCard (String name, String image, CardEffect effect) {
+    public StatusCard (String name, String image, CardType type, CardEffect effect) {
         super(name, image, cardType, IS_REUSABLE);
         this.effect = effect;
         used = false;

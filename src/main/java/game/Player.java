@@ -10,7 +10,7 @@
  * Package: game
  * Class: Player
  *
- * Description:
+ * Description: Class that represents the player/user during a battle
  *
  * ****************************************
  */
@@ -26,16 +26,22 @@ import java.util.List;
 import java.util.Queue;
 
 public class Player {
+
     /* Maximum amount of cards the player can have in their hand */
     private final static int MAX_CARDS_IN_HAND = 4;
+
     /* Player's current health */
     private int currentHealth;
+
     /* Boolean to check if the player is alive */
     private boolean isAlive;
+
     /* List of cards that represents the user's hand */
     private final List<Card> currentHand;
+
     /* Queue of cards that represents the player's deck */
     private final Queue<Card> playerDeck;
+
     /* List of all creatures the player has summoned */
     private final List<Creature> summonedCreatures;
 
@@ -84,7 +90,7 @@ public class Player {
     public int useCard(Card usedCard) {
         // Initialize to 0, because status and creature cards do no damage
         int damageNumber = 0;
-        // Checks what type the card is, and calls the correct use method
+        // Checks what type the card is, and calls the correct method
         switch (usedCard.getType()) {
             case CardType.STATUS:
                 StatusCard usedStatusCard = (StatusCard) usedCard;
