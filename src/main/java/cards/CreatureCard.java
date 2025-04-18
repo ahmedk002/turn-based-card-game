@@ -20,8 +20,9 @@ package cards;
 import creature.Creature;
 
 public class CreatureCard extends AttackCard {
-    private static final CardType cardType = CardType.CREATURE;
     private final int health;
+
+    private static final CardType cardType = CardType.CREATURE;
 
     /**
      * Constructor to create a new creature card.
