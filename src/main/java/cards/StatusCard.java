@@ -139,4 +139,8 @@ public class StatusCard extends Card {
             return false;
         }
     }
+
+    public CardEffect getCardEffect() {
+        return effect;
+    }
 }
