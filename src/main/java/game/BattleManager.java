@@ -17,16 +17,19 @@
 
 package game;
 
+import cards.Card;
 import creature.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattleManager<Player> {
-    private Player player;
-    private Creature enemyCreature;
+import java.util.Scanner;
+
+public class BattleManager {
+    private final Player player;
+    private final Creature enemyCreature;
     private boolean victoryStatus;
-    private List<Creature> summonedCreatures;
+    private final List<Creature> summonedCreatures;
 
     public BattleManager(Player player, Creature enemyCreature) {
         this.player = player;
@@ -53,5 +56,13 @@ public class BattleManager<Player> {
             System.out.println("Enemy defeated!");
             victoryStatus = true;
         }
+    }
+
+    public void playerTurn() {
+        Scanner scanner = new Scanner(System.in);
+        int handIndex = scanner.nextInt();
+        Card chosenCard = player.getCurrentHand().get(handIndex);
+        int damageToEnemy = player.useCard(chosenCard);
+        enemyCreature.takeDamage(damageToEnemy);
     }
 }
