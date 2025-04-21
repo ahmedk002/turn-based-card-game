@@ -17,20 +17,27 @@
 
 package game;
 
-import cards.Card;
 import creature.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Scanner;
-
+/**
+ * Manages battle state between a player and an enemy creature.
+ * Tracks summoned creatures and determines if battle is won.
+ * @author Ahmed
+ */
 public class BattleManager {
-    private final Player player;
-    private final Creature enemyCreature;
+    private Player player;
+    private Creature enemyCreature;
     private boolean victoryStatus;
-    private final List<Creature> summonedCreatures;
+    private List<Creature> summonedCreatures;
 
+    /**
+     * Constructor for the battle manager.
+     * @param player the Player involved in the battle
+     * @param enemyCreature the enemy Creature
+     */
     public BattleManager(Player player, Creature enemyCreature) {
         this.player = player;
         this.enemyCreature = enemyCreature;
@@ -38,10 +45,17 @@ public class BattleManager {
         this.summonedCreatures = new ArrayList<>();
     }
 
+    /**
+     * Starts the battle — could later be expanded into turn-based logic.
+     */
     public void startBattle() {
-        System.out.println("Battle started between player and " + enemyCreature.getName());
+        System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
 
+    /**
+     * Checks if the enemy creature has been defeated.
+     * @return true if enemy is dead, false otherwise
+     */
     public boolean checkVictory() {
         if (!enemyCreature.isAlive()) {
             victoryStatus = true;
@@ -49,6 +63,9 @@ public class BattleManager {
         return victoryStatus;
     }
 
+    /**
+     * Updates battle state — currently only checks if enemy is dead.
+     */
     public void updateBattleState() {
         // You can add logic to simulate one round, or update turn state
         System.out.println("Updating battle state...");
@@ -58,11 +75,19 @@ public class BattleManager {
         }
     }
 
-    public void playerTurn() {
-        Scanner scanner = new Scanner(System.in);
-        int handIndex = scanner.nextInt();
-        Card chosenCard = player.getCurrentHand().get(handIndex);
-        int damageToEnemy = player.useCard(chosenCard);
-        enemyCreature.takeDamage(damageToEnemy);
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Creature getEnemyCreature() {
+        return enemyCreature;
+    }
+
+    public List<Creature> getSummonedCreatures() {
+        return summonedCreatures;
+    }
+
+    public boolean isVictory() {
+        return victoryStatus;
     }
 }

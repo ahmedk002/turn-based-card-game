@@ -2,7 +2,7 @@
  * CSCI 205 - Software Engineering and Design
  * Spring 2025
  *
- * Name: Nathan Ramkissoon
+ * Name: Muhammad Ahmed
  * Date: 4/14/2025
  * Time: 2:43 PM
  *
@@ -17,7 +17,9 @@
 
 package creature;
 
-
+/**
+ * Represents a creature that can be summoned and used in battle.
+ */
 public class Creature {
     private String name;
     private int damage;
@@ -35,11 +37,27 @@ public class Creature {
         return damage;
     }
 
+    public void increaseDamage(int value) {
+        damage += value;
+    }
+
+    public void decreaseDamage(int value) {
+        damage = Math.max(0, damage - value);
+    }
+
+    public int getHealth() {
+        return currentHealth;
+    }
+
+    public void heal(int amount) {
+        currentHealth += amount;
+    }
+
     public void takeDamage(int dmg) {
-        this.currentHealth -= dmg;
-        if (this.currentHealth <= 0) {
-            this.isAlive = false;
-            this.currentHealth = 0;
+        currentHealth -= dmg;
+        if (currentHealth <= 0) {
+            currentHealth = 0;
+            isAlive = false;
         }
     }
 
@@ -49,9 +67,5 @@ public class Creature {
 
     public String getName() {
         return name;
-    }
-
-    public int getCurrentHealth() {
-        return currentHealth;
     }
 }
