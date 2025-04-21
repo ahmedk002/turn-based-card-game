@@ -80,49 +80,13 @@ public class Player {
     }
 
     /**
-     * Uses a card that is selected by the player
-     *
-     * @param usedCard Card that the player has selected
-     * @return integer of the number of damage the selected card deals
-     *
-     * @author Nathan Ramkissoon
-     */
-    public int useCard(Card usedCard) {
-        // Initialize to 0, because status and creature cards do no damage
-        int damageNumber = 0;
-        // Checks what type the card is, and calls the correct method
-        switch (usedCard.getType()) {
-            case CardType.STATUS:
-                StatusCard usedStatusCard = (StatusCard) usedCard;
-                usedStatusCard.useStatusCard(summonedCreatures);
-                break;
-            case CardType.ATTACK:
-                AttackCard usedAttackCard = (AttackCard) usedCard;
-                // The attack card's damage is collected
-                damageNumber = usedAttackCard.useAttackCard();
-                break;
-            case CardType.CREATURE:
-                CreatureCard usedCreatureCard = (CreatureCard) usedCard;
-                Creature creature = usedCreatureCard.useCreatureCard();
-                summonedCreatures.add(creature);
-                break;
-            default:
-                System.out.println("Card has invalid type");
-                break;
-        }
-        // Discard the card from the player's hand
-        discardCard(usedCard);
-        return damageNumber;
-    }
-
-    /**
      * Removes the selected card from the player's hand
      *
      * @param usedCard Card that is selected by the player
      *
      * @author Nathan Ramkissoon
      */
-    private void discardCard(Card usedCard) {
+    public void discardCard(Card usedCard) {
         currentHand.remove(usedCard);
     }
 
