@@ -26,11 +26,14 @@ public class Creature {
     private int currentHealth;
     private boolean isAlive;
 
+    private final int MAX_HEALTH;
+
     public Creature(String name, int damage, int maxHealth) {
         this.name = name;
         this.damage = damage;
         this.currentHealth = maxHealth;
         this.isAlive = true;
+        MAX_HEALTH = maxHealth;
     }
 
     public int getDamage() {
@@ -51,6 +54,9 @@ public class Creature {
 
     public void heal(int amount) {
         currentHealth += amount;
+        if (currentHealth > MAX_HEALTH) {
+            currentHealth = MAX_HEALTH;
+        }
     }
 
     public void takeDamage(int dmg) {
