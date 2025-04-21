@@ -125,9 +125,9 @@ public class StatusCard extends Card {
             throws IllegalArgumentException {
         for (Creature creature : creatureList) {
             switch (upgrade) {
-                case "damage decreases" -> creature.getDamage() -= strength;
-                case "damage increases" -> creature.getDamage() += strength;
-                case "heals" -> creature.getHealth() += strength;
+                case "damage decreases" -> creature.increaseDamage(strength);
+                case "damage increases" -> creature.decreaseDamage(strength);
+                case "heals" -> creature.heal(strength);
                 default -> throw new IllegalArgumentException("Unknown upgrade: " + upgrade);
             }
         }
