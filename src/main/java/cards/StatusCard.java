@@ -50,10 +50,10 @@ public class StatusCard extends Card {
      *     being immediately destroyed, while the moderate effect is half-strength but
      *     the card is not destroyed.
      *     Uses helper methods to get the effect and apply it to each creature.
-     * @param creatureList the list of creatures that the player has.
+     * @param creature the creature that the effect will be applied to.
      * @author Riley
      */
-    public void useStatusCard(List<Creature> creatureList) {
+    public void useStatusCard(Creature creature) {
         if (!used) {
             /*
             Ask if the player wants to apply the max strength (non-reusable) or the moderate strength
@@ -70,14 +70,14 @@ public class StatusCard extends Card {
             if (input.equals("Y")) {
                 //Apply maximum strength effect and make card non-reusable.
                 makeNonReusable();
-                applyStrongEffect(creatureList);
+                applyStrongEffect(creature);
             } else {
                 //Apply the moderate effect.
-                applyModerateEffect(creatureList);
+                applyModerateEffect(creature);
             }
             used = true;
         } else {
-            applyModerateEffect(creatureList);
+            applyModerateEffect(creature);
         }
     }
 
@@ -87,13 +87,13 @@ public class StatusCard extends Card {
      *     damage nerf, or a heal.
      *     Strength -> the strength of the upgrade, gotten from the getStrengthValue() method.
      *     applyEffect() -> another helper method that will apply the effect to each creature.
-     * @param creatureList the list of creatures that the effect will be applied to.
+     * @param creature the creature the effect will be applied to.
      * @author Riley
      */
-    private void applyStrongEffect(List<Creature> creatureList) {
+    private void applyStrongEffect(Creature creature) {
         String upgrade = effect.getEffect();
         int strength = effect.getStrengthValue();
-        applyEffect(creatureList, upgrade, strength);
+        applyEffect(creature, upgrade, strength);
     }
 
     /**
@@ -103,33 +103,31 @@ public class StatusCard extends Card {
      *     Strength -> the strength of the upgrade, gotten from the getStrengthValue() method.
      *     The strength is half of what the method returns, since it is only a moderate effect.
      *     applyEffect() -> another helper method that will apply the effect to each creature.
-     * @param creatureList the list of creatures that the effect will be applied to.
+     * @param creature the creature the effect will be applied to.
      * @author Riley
      */
-    private void applyModerateEffect(List<Creature> creatureList) {
+    private void applyModerateEffect(Creature creature) {
         String upgrade = effect.getEffect();
         int strength= effect.getStrengthValue() / 2;
-        applyEffect(creatureList, upgrade, strength);
+        applyEffect(creature, upgrade, strength);
     }
 
     /**
      * Applies the effect and strength to the creatures in the list.
-     * @param creatureList the list of creatures that will be affected by the upgrade.
+     * @param creature the creature that the buff/debuff will be applied to.
      * @param upgrade a String explaining what the effect does.
      * @param strength an int representing the strength of the effect.
      * @throws IllegalArgumentException if the upgrade String is not one of the three possible
      *     upgrades.
      * @author Riley
      */
-    private void applyEffect(List<Creature> creatureList, String upgrade, int strength)
+    private void applyEffect(Creature creature, String upgrade, int strength)
             throws IllegalArgumentException {
-        for (Creature creature : creatureList) {
-            switch (upgrade) {
-                case "damage decreases" -> creature.increaseDamage(strength);
-                case "damage increases" -> creature.decreaseDamage(strength);
-                case "heals" -> creature.heal(strength);
-                default -> throw new IllegalArgumentException("Unknown upgrade: " + upgrade);
-            }
+        switch (upgrade) {
+            case "damage decreases" -> creature.increaseDamage(strength);
+            case "damage increases" -> creature.decreaseDamage(strength);
+            case "heals" -> creature.heal(strength);
+            default -> throw new IllegalArgumentException("Unknown upgrade: " + upgrade);
         }
     }
 
