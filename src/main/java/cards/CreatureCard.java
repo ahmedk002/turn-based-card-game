@@ -22,7 +22,7 @@ import creature.Creature;
 public class CreatureCard extends AttackCard {
     private final int health;
 
-    private static final CardType cardType = CardType.CREATURE;
+    private static final CardType CARD_TYPE = CardType.CREATURE;
 
     /**
      * Constructor to create a new creature card.
@@ -35,7 +35,7 @@ public class CreatureCard extends AttackCard {
      * @author Riley
      */
     public CreatureCard(String name, String image, int damage, int health) {
-        super(name, image, damage, cardType);
+        super(name, image, damage, CARD_TYPE);
         this.health = health;
     }
 

@@ -21,7 +21,7 @@ public class AttackCard extends Card {
     private final int damage;
 
     private static final boolean IS_REUSABLE = false;
-    private static final CardType cardType = CardType.ATTACK;
+    private static final CardType CARD_TYPE = CardType.ATTACK;
 
     /**
      * Creates an AttackCard using the Card constructor. This is the default constructor.
@@ -33,7 +33,7 @@ public class AttackCard extends Card {
      * @author Riley
      */
     public AttackCard(String name, String image, int damage) {
-        super(name, image, cardType, IS_REUSABLE);
+        super(name, image, CARD_TYPE, IS_REUSABLE);
         this.damage = damage;
     }
 

@@ -20,7 +20,6 @@ package game;
 import cards.*;
 import creature.Creature;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,10 +29,10 @@ import java.util.Scanner;
  * @author Ahmed
  */
 public class BattleManager {
-    private Player player;
-    private Creature enemyCreature;
+    private final Player player;
+    private final Creature enemyCreature;
     private boolean victoryStatus;
-    private List<Creature> summonedCreatures;
+    private final List<Creature> summonedCreatures;
 
     /**
      * Constructor for the battle manager.
@@ -44,37 +43,30 @@ public class BattleManager {
         this.player = player;
         this.enemyCreature = enemyCreature;
         this.victoryStatus = false;
-        this.summonedCreatures = new ArrayList<>();
+        this.summonedCreatures = player.getSummonedCreatures();
     }
 
     /**
      * Starts the battle — could later be expanded into turn-based logic.
      */
-    public void startBattle() {
+    private void startBattle() {
+        victoryStatus = false;
         System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
 
     /**
      * Checks if the enemy creature has been defeated.
-     * @return true if enemy is dead, false otherwise
      */
-    public boolean checkVictory() {
+    private boolean checkVictory() {
         if (!enemyCreature.isAlive()) {
             victoryStatus = true;
+            System.out.println("You won!");
         }
         return victoryStatus;
     }
 
-    /**
-     * Updates battle state — currently only checks if enemy is dead.
-     */
-    public void updateBattleState() {
-        // You can add logic to simulate one round, or update turn state
-        System.out.println("Updating battle state...");
-        if (!enemyCreature.isAlive()) {
-            System.out.println("Enemy defeated!");
-            victoryStatus = true;
-        }
+    public boolean checkDefeat() {
+        return player.getIfAlive();
     }
 
     public Player getPlayer() {
@@ -93,29 +85,85 @@ public class BattleManager {
         return victoryStatus;
     }
 
-    public void playerTurn() {
+    private void playerTurn() {
+        System.out.println("Choose your card from indices 0 - 3");
+        for (Card cardInHand : player.getCurrentHand()) {
+            System.out.println(cardInHand.getName() + ", " + cardInHand.getType());
+        }
         Scanner scanner = new Scanner(System.in);
         int handIndex = scanner.nextInt();
         Card chosenCard = player.getCurrentHand().get(handIndex);
         int damageToEnemy = useCard(chosenCard);
         enemyCreature.takeDamage(damageToEnemy);
+        System.out.println(enemyCreature.getName() + " took " + damageToEnemy);
+        scanner.close();
+    }
+
+    private void enemyTurn() {
+        player.takeDamage(enemyCreature.getDamage());
+        System.out.println("Player took " + enemyCreature.getDamage() + " damage");
+        if (!summonedCreatures.isEmpty()) {
+            for (Creature summonedCreature : summonedCreatures) {
+                summonedCreature.takeDamage(enemyCreature.getDamage());
+                System.out.println(summonedCreature.getName() + " took " + enemyCreature.getDamage() + " damage");
+            }
+        }
+    }
+
+    private void summonedCreaturesTurn() {
+        if (!summonedCreatures.isEmpty()) {
+            for (Creature summonedCreature : summonedCreatures) {
+                enemyCreature.takeDamage(summonedCreature.getDamage());
+            }
+        }
+    }
+
+    public void battleLoop() {
+        startBattle();
+        while (!victoryStatus) {
+            playerTurn();
+            if (checkVictory()) {
+                break;
+            }
+            summonedCreaturesTurn();
+            if (checkVictory()) {
+                break;
+            }
+            enemyTurn();
+            if (checkDefeat()) {
+                System.out.println("You lose!");
+                break;
+            }
+            removeDefeatedCreatures();
+        }
+    }
+
+    private void removeDefeatedCreatures() {
+        for (Creature summonedCreature : summonedCreatures) {
+            if (!summonedCreature.isAlive()) {
+                summonedCreatures.remove(summonedCreature);
+                System.out.println(summonedCreature.getName() + " was defeated...");
+            }
+        }
     }
 
     /**
-     * Uses a card that is selected by the player
+     * Uses a card that is selected by the player, and returns the amount of damage to deal to the enemy
      *
      * @param usedCard Card that the player has selected
      * @return integer of the number of damage the selected card deals
      *
      * @author Nathan Ramkissoon
      */
-    public int useCard(Card usedCard) {
+    private int useCard(Card usedCard) {
         // Initialize to 0, because status and creature cards do no damage
         int damageNumber = 0;
         // Checks what type the card is, and calls the correct method
         switch (usedCard.getType()) {
             case CardType.STATUS:
                 StatusCard usedStatusCard = (StatusCard) usedCard;
+                // If the card decreases damage, they are applied to the enemy
+                // If it buffs or heals, the effect is applied to allied summoned creatures
                 if (usedStatusCard.getCardEffect().getEffect().equalsIgnoreCase("decrease")) {
                     usedStatusCard.useStatusCard(enemyCreature);
                 } else {

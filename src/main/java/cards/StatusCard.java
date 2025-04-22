@@ -18,7 +18,7 @@
 package cards;
 
 import creature.Creature;
-import java.util.List;
+
 import java.util.Scanner;
 
 public class StatusCard extends Card {
@@ -27,10 +27,10 @@ public class StatusCard extends Card {
     private final CardEffect effect;
 
     private static final boolean IS_REUSABLE = true;
-    private static final CardType cardType = CardType.STATUS;
+    private static final CardType CARD_TYPE = CardType.STATUS;
 
-    public StatusCard (String name, String image, CardType type, CardEffect effect) {
-        super(name, image, cardType, IS_REUSABLE);
+    public StatusCard (String name, String image, CardEffect effect) {
+        super(name, image, CARD_TYPE, IS_REUSABLE);
         this.effect = effect;
         used = false;
         sc = new Scanner(System.in);
