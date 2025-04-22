@@ -45,8 +45,8 @@ dependencies {
 }
 
 application {
-    mainModule.set("csci205_jams")
-    mainClass.set("jam01.HellowWorld")
+    mainModule.set("csci205_final_project")
+    mainClass.set("game.RunGame")
 
     if (project.hasProperty("mainClass")) {
         mainClass.set(project.property("mainClass").toString())
@@ -67,18 +67,3 @@ def createJavaFXTask(String taskName, String description, String mainClassName) 
         ]
     }
 }
-
-// Create a task for the HelloFX test application
-createJavaFXTask('runHelloFX',
-        'Runs the HelloFX application',
-        'jam08.HelloFX')
-
-//Create a task for the HelloMain test application
-createJavaFXTask('runHelloMain',
-        'Runs the HelloMain application',
-        'jam08.HelloMain')
-
-//Create a task for the StockVisualizerApp application
-createJavaFXTask('runStockVisualizerApp',
-        'Runs the StockVisualizerApp application',
-        'jam08.StockVisualizerApp')
