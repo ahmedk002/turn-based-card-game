@@ -1,4 +1,4 @@
-/* *****************************************
+package game;/* *****************************************
  * CSCI 205 - Software Engineering and Design
  * Spring 2025
  *
@@ -7,7 +7,7 @@
  * Time: 10:38 AM
  *
  * Project: csci205_final_project
- * Package: PACKAGE_NAME
+ * Package: game
  * Class: RunGame
  *
  * Description:
@@ -17,7 +17,6 @@
 
 import cards.*;
 import creature.*;
-import game.*;
 
 public class RunGame {
     Player gamer = new Player(50);

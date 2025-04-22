@@ -60,22 +60,18 @@ public class Player {
      *
      * @author Nathan Ramkissoon
      */
-    public void givePlayerCard(List<Card> cardsList) {
+    public void givePlayerCards(List<Card> cardsList) {
         playerDeck.addAll(cardsList);
     }
 
     /**
      * Draws a card from the player's deck and adds it to their hand
      *
-     * @return boolean that represents if a card was successfully drawn
-     *
      * @author Nathan Ramkissoon
      */
-    public boolean drawCard() {
+    public void drawCard() {
         if (currentHand.size() < MAX_CARDS_IN_HAND && !playerDeck.isEmpty()) {
-            return currentHand.add(playerDeck.remove());
-        } else {
-            return false;
+            currentHand.add(playerDeck.remove());
         }
     }
 
@@ -125,4 +121,6 @@ public class Player {
     public Queue<Card> getPlayerDeck() {
         return playerDeck;
     }
+
+    public int getMaxCardsInHand() { return MAX_CARDS_IN_HAND; }
 }
