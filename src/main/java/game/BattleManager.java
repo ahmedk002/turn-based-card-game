@@ -57,6 +57,11 @@ public class BattleManager {
             player.drawCard();
         }
         while (!victoryStatus) {
+            System.out.println("----------------------------------");
+            System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
+            for (Creature creature : summonedCreatures) {
+                System.out.println(creature.getName() + " health: " + creature.getHealth());
+            }
             playerTurn();
             if (checkVictory()) {
                 break;
@@ -86,7 +91,7 @@ public class BattleManager {
      * Player chooses a card and plays it, which may cause damage to the enemy
      */
     private void playerTurn() {
-        System.out.println("Choose your card from indices 0 - 3");
+        System.out.println("Choose your card from indices 0 - " + (player.getCurrentHand().size() - 1));
         for (Card cardInHand : player.getCurrentHand()) {
             System.out.println(cardInHand.getName() + ", " + cardInHand.getType());
         }
@@ -95,8 +100,7 @@ public class BattleManager {
         Card chosenCard = player.getCurrentHand().get(handIndex);
         int damageToEnemy = useCard(chosenCard);
         enemyCreature.takeDamage(damageToEnemy);
-        System.out.println(enemyCreature.getName() + " took " + damageToEnemy);
-        scanner.close();
+        System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
     }
 
     /**
@@ -116,7 +120,7 @@ public class BattleManager {
                 StatusCard usedStatusCard = (StatusCard) usedCard;
                 // If the card decreases damage, they are applied to the enemy
                 // If it buffs or heals, the effect is applied to allied summoned creatures
-                if (usedStatusCard.getCardEffect().getEffect().equalsIgnoreCase("decrease")) {
+                if (usedStatusCard.getCardEffect().getEffect().toLowerCase().contains("decrease")) {
                     usedStatusCard.useStatusCard(enemyCreature);
                 } else {
                     for (Creature summonedCreature : summonedCreatures) {
@@ -185,7 +189,7 @@ public class BattleManager {
     }
 
     public boolean checkDefeat() {
-        return player.getIfAlive();
+        return !player.getIfAlive() || player.getCurrentHand().isEmpty();
     }
 
     private void removeDefeatedCreatures() {

@@ -18,12 +18,20 @@ package game;/* *****************************************
 import cards.*;
 import creature.*;
 
+import java.util.List;
+
 public class RunGame {
     public static void main(String[] args) {
         Player gamer = new Player(50);
         Creature goblin = new Creature("Goblin", 5, 300);
 
-        Card fireball = new AttackCard("Fire Ball", null, 10);
+        Card increaseDamageLow = new StatusCard("Low Damage Increase", null, CardEffect.INCREASE_LOW);
+        Card decreaseDamageLow = new StatusCard("Low Damage Decrease", null, CardEffect.DECREASE_LOW);
+        Card fireBall = new AttackCard("Fire Ball", null, 10);
+        Card thunderBolt = new AttackCard("Thunder Bolt", null, 10);
+        Card lion = new CreatureCard("Lion", null, 10, 40);
+        Card chimera = new CreatureCard("Chimera", null, 25, 60);
+        gamer.givePlayerCards(List.of(fireBall, thunderBolt, increaseDamageLow, lion, decreaseDamageLow, chimera));
 
         BattleManager battle = new BattleManager(gamer, goblin);
         battle.battleLoop();
