@@ -10,7 +10,7 @@
  * Package: cards
  * Class: AttackCard
  *
- * Description:
+ * Description: Card that does a set amount of damage
  *
  * ****************************************
  */

@@ -10,7 +10,7 @@
  * Package: cards
  * Class: Card
  *
- * Description:
+ * Description: Abstract class used as the basis for more specific Card objects
  *
  * ****************************************
  */

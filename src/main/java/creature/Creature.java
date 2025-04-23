@@ -10,7 +10,7 @@
  * Package: creature
  * Class: Creature
  *
- * Description:
+ * Description: Represents a creature with its own health and attack damage
  *
  * ****************************************
  */
@@ -21,7 +21,7 @@ package creature;
  * Represents a creature that can be summoned and used in battle.
  */
 public class Creature {
-    private String name;
+    private final String name;
     private int damage;
     private int currentHealth;
     private boolean isAlive;
