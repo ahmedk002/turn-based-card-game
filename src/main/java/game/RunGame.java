@@ -10,7 +10,7 @@ package game;/* *****************************************
  * Package: game
  * Class: RunGame
  *
- * Description:
+ * Description: Runs the actual game in the terminal
  *
  * ****************************************
  */

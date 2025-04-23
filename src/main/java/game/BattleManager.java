@@ -10,7 +10,7 @@
  * Package: game
  * Class: Player
  *
- * Description:
+ * Description: Class that organizes a battle between the player and an enemy creature
  *
  * ****************************************
  */
@@ -38,6 +38,8 @@ public class BattleManager {
      * Constructor for the battle manager.
      * @param player the Player involved in the battle
      * @param enemyCreature the enemy Creature
+     *
+     * @author Muhammad Ahmed
      */
     public BattleManager(Player player, Creature enemyCreature) {
         this.player = player;
@@ -56,7 +58,7 @@ public class BattleManager {
         for (int i = 0; i < player.getMaxCardsInHand(); i++) {
             player.drawCard();
         }
-        while (!victoryStatus) {
+        while (!isVictory()) {
             System.out.println("----------------------------------");
             System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
             for (Creature creature : summonedCreatures) {
@@ -81,6 +83,8 @@ public class BattleManager {
 
     /**
      * Starts the battle — could later be expanded into turn-based logic.
+     *
+     * @author Muhammad Ahmed
      */
     private void startBattle() {
         victoryStatus = false;
@@ -89,12 +93,15 @@ public class BattleManager {
 
     /**
      * Player chooses a card and plays it, which may cause damage to the enemy
+     *
+     * @author Nathan Ramkissoon
      */
     private void playerTurn() {
         System.out.println("Choose your card from indices 0 - " + (player.getCurrentHand().size() - 1));
         for (Card cardInHand : player.getCurrentHand()) {
             System.out.println(cardInHand.getName() + ", " + cardInHand.getType());
         }
+        // Gets card from player's input; used for temporary terminal functionality
         Scanner scanner = new Scanner(System.in);
         int handIndex = scanner.nextInt();
         Card chosenCard = player.getCurrentHand().get(handIndex);
@@ -112,14 +119,14 @@ public class BattleManager {
      * @author Nathan Ramkissoon
      */
     private int useCard(Card usedCard) {
-        // Initialize to 0, because status and creature cards do no damage
+        // Initialized to 0, as status and creature cards do no damage
         int damageNumber = 0;
         // Checks what type the card is, and calls the correct method
         switch (usedCard.getType()) {
             case CardType.STATUS:
                 StatusCard usedStatusCard = (StatusCard) usedCard;
-                // If the card decreases damage, they are applied to the enemy
-                // If it buffs or heals, the effect is applied to allied summoned creatures
+                // If the card decreases damage, the effect is applied to the enemy
+                // If it buffs damage or heals, the effect is instead applied to allied summoned creatures
                 if (usedStatusCard.getCardEffect().getEffect().toLowerCase().contains("decrease")) {
                     usedStatusCard.useStatusCard(enemyCreature);
                 } else {
@@ -135,6 +142,7 @@ public class BattleManager {
                 break;
             case CardType.CREATURE:
                 CreatureCard usedCreatureCard = (CreatureCard) usedCard;
+                // Gets a creature from the card's information and adds it to the summoned creature list
                 Creature creature = usedCreatureCard.useCreatureCard();
                 summonedCreatures.add(creature);
                 break;
@@ -144,12 +152,16 @@ public class BattleManager {
         }
         // Discard the card from the player's hand
         player.discardCard(usedCard);
+        // Draw a new card if able to
         player.drawCard();
+        // Return the amount of damage dealt by the card
         return damageNumber;
     }
 
     /**
      * Checks if the enemy creature has been defeated.
+     *
+     * @author Muhammad Ahmed
      */
     private boolean checkVictory() {
         if (!enemyCreature.isAlive()) {
@@ -188,10 +200,20 @@ public class BattleManager {
         }
     }
 
+    /**
+     * Checks if the player is dead or their current hand is empty, meaning they ran out of cards
+     *
+     * @return boolean that shows if the player is defeated
+     */
     public boolean checkDefeat() {
         return !player.getIfAlive() || player.getCurrentHand().isEmpty();
     }
 
+    /**
+     * Removes creatures from the summoned creatures list if they are defeated
+     *
+     * @author Nathan Ramkissoon
+     */
     private void removeDefeatedCreatures() {
         if (!summonedCreatures.isEmpty()) {
             for (Creature summonedCreature : summonedCreatures) {

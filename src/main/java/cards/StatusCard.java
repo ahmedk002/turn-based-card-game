@@ -10,7 +10,7 @@
  * Package: cards
  * Class: StatusCard
  *
- * Description:
+ * Description: Cards that do no damage and instead apply an effect to creatures
  *
  * ****************************************
  */

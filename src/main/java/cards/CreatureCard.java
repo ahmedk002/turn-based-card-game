@@ -10,7 +10,7 @@
  * Package: cards
  * Class: CreatureCard
  *
- * Description:
+ * Description: Cards that do no damage but hold information used to create a Creature
  *
  * ****************************************
  */
