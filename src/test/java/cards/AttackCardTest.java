@@ -23,15 +23,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AttackCardTest {
-    Player player;
     Card card1;
 
-    final int playerHealth = 50;
     final int damage = 10;
 
     @BeforeEach
     void setUp() {
-        player = new Player(playerHealth);
         card1 = new AttackCard("Thunderbolt", null, damage);
     }
 

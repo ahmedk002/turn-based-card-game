@@ -1,0 +1,99 @@
+/* *****************************************
+ * CSCI 205 - Software Engineering and Design
+ * Spring 2025
+ *
+ * Name: Riley Chen
+ * Date: 4/24/2025
+ * Time: 1:23 PM
+ *
+ * Project: csci205_final_project
+ * Package: cards
+ * Class: StatusCardTest
+ *
+ * Description:
+ *
+ * ****************************************
+ */
+
+package cards;
+
+import game.Player;
+import creature.Creature;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class StatusCardTest {
+    Creature creature;
+    Card damageIncreaseCard1;
+    Card damageDecreaseCard1;
+    Card healCard1;
+    Card damageIncreaseCard2;
+    Card damageDecreaseCard2;
+    Card healCard2;
+
+    final CardEffect effect1 = CardEffect.INCREASE_MED;
+    final CardEffect effect2 = CardEffect.DECREASE_MED;
+    final CardEffect effect3 = CardEffect.HEAL_MED;
+
+    final int playerHealth = 50;
+
+    @BeforeEach
+    void setUp() {
+        creature = new Creature("Friendly Lion", 10, 10);
+
+        //Create a set of three reusable StatusCards (one with each effect).
+        damageIncreaseCard1 = new StatusCard("Sharpened claw", null, effect1, true);
+        damageDecreaseCard1 = new StatusCard("Broken bones", null, effect2, true);
+        healCard1 = new StatusCard("Medkit", null, effect3, true);
+
+        //Create a set of three non-reusable StatusCards (one with each effect);
+        damageIncreaseCard2 = new StatusCard("Sharpened claw", null, effect1, false);
+        damageDecreaseCard2 = new StatusCard("Broken bones", null, effect2, false);
+        healCard2 = new StatusCard("Medkit", null, effect3, false);
+    }
+
+    @Test
+    void testReusableDamageIncrease() {
+        assertTrue(creature.getDamage() == 10);
+        StatusCard card = (StatusCard) damageIncreaseCard1;
+        card.useStatusCard(creature);
+        assertTrue(creature.getDamage() == 12); //Test applying the card.
+        card.useStatusCard(creature);
+        assertTrue(creature.getDamage() == 14); //Make sure you can apply the card again.
+    }
+
+    @Test
+    void testReusableDamageDecrease() {
+        assertTrue(creature.getDamage() == 10);
+        StatusCard card = (StatusCard) damageDecreaseCard1;
+        card.useStatusCard(creature);
+        System.out.println(creature.getDamage());
+        assertTrue(creature.getDamage() == 8);
+        card.useStatusCard(creature);
+        assertTrue(creature.getDamage() == 6);
+    }
+
+    @Test
+    void testHeal() {
+        assertTrue(creature.getHealth() == 10);
+        StatusCard card = (StatusCard) healCard1;
+
+        //Ensure that the creature cannot heal above its max health.
+        card.useStatusCard(creature);
+        assertTrue(creature.getHealth() == 10);
+
+        /*
+        Damage creature first, then heal it by greater than the amount of damage taken.
+        Ensure that it only heals to its max health.
+        */
+        creature.takeDamage(1);
+        card.useStatusCard(creature);
+        assertTrue(creature.getHealth() == 10);
+
+        //Deal a lot of damage to the creature to test the exact amount it heals.
+        creature.takeDamage(5);
+        card.useStatusCard(creature);
+        assertTrue(creature.getHealth() == 7);
+    }
+}
