@@ -127,6 +127,9 @@ public class BattleManager {
                         usedStatusCard.useStatusCard(summonedCreature);
                     }
                 }
+                if (!usedStatusCard.isReusable() && usedCard.isReusable()) {
+                    usedCard.makeNonReusable();
+                }
                 break;
             case CardType.ATTACK:
                 AttackCard usedAttackCard = (AttackCard) usedCard;

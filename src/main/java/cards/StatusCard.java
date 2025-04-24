@@ -42,6 +42,7 @@ public class StatusCard extends Card {
         this.effect = effect;
         used = false;
         inTesting = false;
+        reuse = false;
     }
 
     public StatusCard (String name, String image, CardEffect effect, boolean reusable) {
