@@ -1,4 +1,4 @@
-package game;/* *****************************************
+/* *****************************************
  * CSCI 205 - Software Engineering and Design
  * Spring 2025
  *
@@ -14,6 +14,8 @@ package game;/* *****************************************
  *
  * ****************************************
  */
+
+package game;
 
 import cards.*;
 import org.junit.jupiter.api.BeforeEach;

@@ -53,6 +53,10 @@ public abstract class Card {
         reusable = false;
     }
 
+    public boolean isReusable() {
+        return reusable;
+    }
+
     public CardType getType() {
         return cardType;
     }
