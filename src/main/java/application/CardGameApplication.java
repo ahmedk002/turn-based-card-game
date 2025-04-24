@@ -33,15 +33,17 @@ public class CardGameApplication extends Application
 
     public void start(Stage stage1)
     {
+
         Button button1 = new Button("Click me!");
         Label label1 = new Label("Hello, World!");
         label1.relocate(0, 50);
 
-        Pane root = new Pane(button1, label1);
+        Pane root = new Pane();
+        root.getChildren().addAll(button1, label1);
 
-        Scene scene1 = new Scene(root, 300, 400);
+        Scene scene1 = new Scene(root, 1080, 740);
         stage1.setScene(scene1);
-        stage1.setTitle("A pane with two controls");
+        stage1.setTitle("Turn-Based Card Game");
         stage1.show();
     }
 }
