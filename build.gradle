@@ -67,3 +67,5 @@ def createJavaFXTask(String taskName, String description, String mainClassName) 
         ]
     }
 }
+
+createJavaFXTask('runCardGameApplication', 'Runs the CardGameApplication', 'application.CardGameApplication')

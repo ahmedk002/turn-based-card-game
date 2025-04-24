@@ -59,11 +59,6 @@ public class BattleManager {
             player.drawCard();
         }
         while (!isVictory()) {
-            System.out.println("----------------------------------");
-            System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
-            for (Creature creature : summonedCreatures) {
-                System.out.println(creature.getName() + " health: " + creature.getHealth());
-            }
             playerTurn();
             if (checkVictory()) {
                 break;
@@ -74,7 +69,6 @@ public class BattleManager {
             }
             enemyTurn();
             if (checkDefeat()) {
-                System.out.println("You lose!");
                 break;
             }
             removeDefeatedCreatures();
@@ -97,17 +91,12 @@ public class BattleManager {
      * @author Nathan Ramkissoon
      */
     private void playerTurn() {
-        System.out.println("Choose your card from indices 0 - " + (player.getCurrentHand().size() - 1));
-        for (Card cardInHand : player.getCurrentHand()) {
-            System.out.println(cardInHand.getName() + ", " + cardInHand.getType());
-        }
         // Gets card from player's input; used for temporary terminal functionality
         Scanner scanner = new Scanner(System.in);
         int handIndex = scanner.nextInt();
         Card chosenCard = player.getCurrentHand().get(handIndex);
         int damageToEnemy = useCard(chosenCard);
         enemyCreature.takeDamage(damageToEnemy);
-        System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
     }
 
     /**
@@ -147,8 +136,7 @@ public class BattleManager {
                 summonedCreatures.add(creature);
                 break;
             default:
-                System.out.println("Card has invalid type");
-                break;
+                throw new IllegalArgumentException("Card has invalid type");
         }
         // Discard the card from the player's hand
         player.discardCard(usedCard);
@@ -166,7 +154,6 @@ public class BattleManager {
     private boolean checkVictory() {
         if (!enemyCreature.isAlive()) {
             victoryStatus = true;
-            System.out.println("You won!");
         }
         return victoryStatus;
     }
@@ -191,11 +178,9 @@ public class BattleManager {
      */
     private void enemyTurn() {
         player.takeDamage(enemyCreature.getDamage());
-        System.out.println("Player took " + enemyCreature.getDamage() + " damage");
         if (!summonedCreatures.isEmpty()) {
             for (Creature summonedCreature : summonedCreatures) {
                 summonedCreature.takeDamage(enemyCreature.getDamage());
-                System.out.println(summonedCreature.getName() + " took " + enemyCreature.getDamage() + " damage");
             }
         }
     }
@@ -219,7 +204,6 @@ public class BattleManager {
             for (Creature summonedCreature : summonedCreatures) {
                 if (!summonedCreature.isAlive()) {
                     summonedCreatures.remove(summonedCreature);
-                    System.out.println(summonedCreature.getName() + " was defeated...");
                 }
             }
         }
