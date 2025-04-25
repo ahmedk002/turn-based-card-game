@@ -64,14 +64,31 @@ public class StatusCardTest {
     }
 
     @Test
+    void testNonreusableDamageIncrease() {
+        assertTrue(creature.getDamage() == 10);
+        StatusCard card = (StatusCard) damageIncreaseCard2;
+        card.useStatusCard(creature);
+        assertTrue(creature.getDamage() == 15);
+        assertTrue(!card.isReusable());
+    }
+
+    @Test
     void testReusableDamageDecrease() {
         assertTrue(creature.getDamage() == 10);
         StatusCard card = (StatusCard) damageDecreaseCard1;
         card.useStatusCard(creature);
-        System.out.println(creature.getDamage());
         assertTrue(creature.getDamage() == 8);
         card.useStatusCard(creature);
         assertTrue(creature.getDamage() == 6);
+    }
+
+    @Test
+    void testNonreusableDamageDecrease() {
+        assertTrue(creature.getDamage() == 10);
+        StatusCard card = (StatusCard) damageDecreaseCard2;
+        card.useStatusCard(creature);
+        assertTrue(creature.getDamage() == 5);
+        assertTrue(!card.isReusable());
     }
 
     @Test
@@ -95,5 +112,14 @@ public class StatusCardTest {
         creature.takeDamage(5);
         card.useStatusCard(creature);
         assertTrue(creature.getHealth() == 7);
+    }
+
+    @Test
+    void testNonreusableHeal() {
+        assertTrue(creature.getHealth() == 10);
+        creature.takeDamage(6);
+        StatusCard card = (StatusCard) healCard2;
+        card.useStatusCard(creature);
+        assertTrue(creature.getHealth() == 9);
     }
 }
