@@ -97,14 +97,19 @@ public class BattleManager {
         }
         Scanner scanner = new Scanner(System.in);
         int handIndex = scanner.nextInt();
-        Card chosenCard = player.getCurrentHand().get(handIndex);
-        int damageToEnemy = useCard(chosenCard);
-        enemyCreature.takeDamage(damageToEnemy);
-        System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
-        for (Creature creature : player.getSummonedCreatures()) {
-            damageToEnemy = creature.getDamage();
+        try {
+            Card chosenCard = player.getCurrentHand().get(handIndex);
+            int damageToEnemy = useCard(chosenCard);
             enemyCreature.takeDamage(damageToEnemy);
             System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
+            for (Creature creature : player.getSummonedCreatures()) {
+                damageToEnemy = creature.getDamage();
+                enemyCreature.takeDamage(damageToEnemy);
+                System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("That is not a valid value! Please try again.");
+            playerTurn();
         }
 
     }
