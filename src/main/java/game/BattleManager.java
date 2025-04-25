@@ -66,7 +66,6 @@ public class BattleManager {
             if (checkVictory()) {
                 break;
             }
-            summonedCreaturesTurn();
             if (checkVictory()) {
                 break;
             }
@@ -204,19 +203,6 @@ public class BattleManager {
             victoryStatus = true;
         }
         return victoryStatus;
-    }
-
-    /**
-     * All summoned creatures do damage to the enemy
-     *
-     * @author Nathan Ramkissoon
-     */
-    private void summonedCreaturesTurn() {
-        if (!summonedCreatures.isEmpty()) {
-            for (Creature summonedCreature : summonedCreatures) {
-                enemyCreature.takeDamage(summonedCreature.getDamage());
-            }
-        }
     }
 
     /**
