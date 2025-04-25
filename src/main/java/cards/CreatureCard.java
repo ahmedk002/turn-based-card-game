@@ -46,7 +46,7 @@ public class CreatureCard extends AttackCard {
      * @author Riley
      */
     public Creature useCreatureCard() {
-        Creature creature = new Creature(this.getName(), this.getDamage(), health);
+        Creature creature = new Creature(this.getName(), this.getImage(), this.getDamage(), health);
         return creature;
     }
 }

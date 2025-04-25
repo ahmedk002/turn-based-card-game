@@ -22,14 +22,16 @@ package creature;
  */
 public class Creature {
     private final String name;
+    private final String image;
     private int damage;
     private int currentHealth;
     private boolean isAlive;
 
     private final int MAX_HEALTH;
 
-    public Creature(String name, int damage, int maxHealth) {
+    public Creature(String name, String image, int damage, int maxHealth) {
         this.name = name;
+        this.image = image;
         this.damage = damage;
         this.currentHealth = maxHealth;
         this.isAlive = true;
@@ -74,4 +76,6 @@ public class Creature {
     public String getName() {
         return name;
     }
+
+    public String getImage() { return image; }
 }

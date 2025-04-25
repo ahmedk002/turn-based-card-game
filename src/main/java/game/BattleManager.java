@@ -53,26 +53,14 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
-    public void battleLoop() {
-        startBattle();
-        for (int i = 0; i < player.getMaxCardsInHand(); i++) {
-            player.drawCard();
-        }
-        while (!isVictory()) {
-            playerTurn();
-            if (checkVictory()) {
-                break;
-            }
-            summonedCreaturesTurn();
-            if (checkVictory()) {
-                break;
-            }
-            enemyTurn();
-            if (checkDefeat()) {
-                break;
-            }
-            removeDefeatedCreatures();
-        }
+    public void battleLoop(Card chosenCard) {
+        playerTurn(chosenCard);
+        checkVictory();
+        summonedCreaturesTurn();
+        checkVictory();
+        enemyTurn();
+        checkDefeat();
+        removeDefeatedCreatures();
     }
 
     /**
@@ -80,7 +68,7 @@ public class BattleManager {
      *
      * @author Muhammad Ahmed
      */
-    private void startBattle() {
+    public void startBattle() {
         victoryStatus = false;
         System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
@@ -90,11 +78,7 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
-    private void playerTurn() {
-        // Gets card from player's input; used for temporary terminal functionality
-        Scanner scanner = new Scanner(System.in);
-        int handIndex = scanner.nextInt();
-        Card chosenCard = player.getCurrentHand().get(handIndex);
+    public void playerTurn(Card chosenCard) {
         int damageToEnemy = useCard(chosenCard);
         enemyCreature.takeDamage(damageToEnemy);
     }
