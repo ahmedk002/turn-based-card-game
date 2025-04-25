@@ -38,8 +38,6 @@ public class BattleManager {
      * Constructor for the battle manager.
      * @param player the Player involved in the battle
      * @param enemyCreature the enemy Creature
-     *
-     * @author Muhammad Ahmed
      */
     public BattleManager(Player player, Creature enemyCreature) {
         this.player = player;
@@ -58,7 +56,12 @@ public class BattleManager {
         for (int i = 0; i < player.getMaxCardsInHand(); i++) {
             player.drawCard();
         }
-        while (!isVictory()) {
+        while (!victoryStatus) {
+            System.out.println("----------------------------------");
+            System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
+            for (Creature creature : summonedCreatures) {
+                System.out.println(creature.getName() + " health: " + creature.getHealth());
+            }
             playerTurn();
             if (checkVictory()) {
                 break;
@@ -69,6 +72,7 @@ public class BattleManager {
             }
             enemyTurn();
             if (checkDefeat()) {
+                System.out.println("You lose!");
                 break;
             }
             removeDefeatedCreatures();
@@ -91,6 +95,29 @@ public class BattleManager {
      * @author Nathan Ramkissoon
      */
     private void playerTurn() {
+        if (player.getCurrentHand().isEmpty()) {
+            attack(0);
+        } else {
+            System.out.println("Choose your card from indices 0 - " + (player.getCurrentHand().size() - 1));
+            for (Card cardInHand : player.getCurrentHand()) {
+                System.out.println(cardInHand.getName() + ", " + cardInHand.getType());
+            }
+            Scanner scanner = new Scanner(System.in);
+            int handIndex = scanner.nextInt();
+
+            /*
+            Make sure the index is a valid one. Handle the exception if it is not
+            by calling the turn method again.
+             */
+            try {
+                Card chosenCard = player.getCurrentHand().get(handIndex);
+                int damageToEnemy = useCard(chosenCard);
+                attack(damageToEnemy);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("That is not a valid value! Please try again.");
+                playerTurn();
+            }
+        }
         // Gets card from player's input; used for temporary terminal functionality
         Scanner scanner = new Scanner(System.in);
         int handIndex = scanner.nextInt();
@@ -150,6 +177,24 @@ public class BattleManager {
     }
 
     /**
+     * Attacks the enemy creature. Both the attack from an AttackCard (if played) and
+     *     the attacks of all summoned creatures will be applied by this method.
+     * @param playerDamage the amount of damage that the player inflicts from an AttackCard.
+     *                     Is 0 if no AttackCard was played.
+     */
+    private void attack(int playerDamage) {
+        enemyCreature.takeDamage(playerDamage);
+        System.out.println(enemyCreature.getName() + " took " + playerDamage + " damage");
+        int creatureDamage;
+        for (Creature creature : player.getSummonedCreatures()) {
+            creatureDamage = creature.getDamage();
+            creature.takeDamage(creatureDamage);
+            System.out.println(creature.getName() + " attacks " + enemyCreature.getName() + "!\n"
+                    + enemyCreature.getName() + " took " + creatureDamage + " damage.");
+        }
+    }
+
+    /**
      * Checks if the enemy creature has been defeated.
      *
      * @author Muhammad Ahmed
@@ -181,9 +226,11 @@ public class BattleManager {
      */
     private void enemyTurn() {
         player.takeDamage(enemyCreature.getDamage());
+        System.out.println("Player took " + enemyCreature.getDamage() + " damage");
         if (!summonedCreatures.isEmpty()) {
             for (Creature summonedCreature : summonedCreatures) {
                 summonedCreature.takeDamage(enemyCreature.getDamage());
+                System.out.println(summonedCreature.getName() + " took " + enemyCreature.getDamage() + " damage");
             }
         }
     }
@@ -194,7 +241,8 @@ public class BattleManager {
      * @return boolean that shows if the player is defeated
      */
     public boolean checkDefeat() {
-        return !player.getIfAlive() || player.getCurrentHand().isEmpty();
+        return !player.getIfAlive() ||
+                (player.getSummonedCreatures().isEmpty() && player.getCurrentHand().isEmpty());
     }
 
     /**
@@ -207,6 +255,7 @@ public class BattleManager {
             for (Creature summonedCreature : summonedCreatures) {
                 if (!summonedCreature.isAlive()) {
                     summonedCreatures.remove(summonedCreature);
+                    System.out.println(summonedCreature.getName() + " was defeated...");
                 }
             }
         }
