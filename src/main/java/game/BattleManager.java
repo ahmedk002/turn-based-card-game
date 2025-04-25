@@ -38,6 +38,8 @@ public class BattleManager {
      * Constructor for the battle manager.
      * @param player the Player involved in the battle
      * @param enemyCreature the enemy Creature
+     *
+     * @author Muhammad Ahmed
      */
     public BattleManager(Player player, Creature enemyCreature) {
         this.player = player;
@@ -51,31 +53,17 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
-    public void battleLoop() {
-        startBattle();
-        for (int i = 0; i < player.getMaxCardsInHand(); i++) {
-            player.drawCard();
+    public void battleLoop(Card chosenCard) {
+        System.out.println("----------------------------------");
+        System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
+        playerTurn(chosenCard);
+        checkVictory();
+        checkVictory();
+        enemyTurn();
+        if (checkDefeat()) {
+            System.out.println("You lose!");
         }
-        while (!victoryStatus) {
-            System.out.println("----------------------------------");
-            System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
-            for (Creature creature : summonedCreatures) {
-                System.out.println(creature.getName() + " health: " + creature.getHealth());
-            }
-            playerTurn();
-            if (checkVictory()) {
-                break;
-            }
-            if (checkVictory()) {
-                break;
-            }
-            enemyTurn();
-            if (checkDefeat()) {
-                System.out.println("You lose!");
-                break;
-            }
-            removeDefeatedCreatures();
-        }
+        removeDefeatedCreatures();
     }
 
     /**
@@ -83,7 +71,7 @@ public class BattleManager {
      *
      * @author Muhammad Ahmed
      */
-    private void startBattle() {
+    public void startBattle() {
         victoryStatus = false;
         System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
@@ -93,36 +81,9 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
-    private void playerTurn() {
-        if (player.getCurrentHand().isEmpty()) {
-            attack(0);
-        } else {
-            System.out.println("Choose your card from indices 0 - " + (player.getCurrentHand().size() - 1));
-            for (Card cardInHand : player.getCurrentHand()) {
-                System.out.println(cardInHand.getName() + ", " + cardInHand.getType());
-            }
-            Scanner scanner = new Scanner(System.in);
-            int handIndex = scanner.nextInt();
-
-            /*
-            Make sure the index is a valid one. Handle the exception if it is not
-            by calling the turn method again.
-             */
-            try {
-                Card chosenCard = player.getCurrentHand().get(handIndex);
-                int damageToEnemy = useCard(chosenCard);
-                attack(damageToEnemy);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("That is not a valid value! Please try again.");
-                playerTurn();
-            }
-        }
-        // Gets card from player's input; used for temporary terminal functionality
-        Scanner scanner = new Scanner(System.in);
-        int handIndex = scanner.nextInt();
-        Card chosenCard = player.getCurrentHand().get(handIndex);
+    public void playerTurn(Card chosenCard) {
         int damageToEnemy = useCard(chosenCard);
-        enemyCreature.takeDamage(damageToEnemy);
+        attack(damageToEnemy);
     }
 
     /**

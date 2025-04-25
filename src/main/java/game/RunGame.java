@@ -19,11 +19,12 @@ import cards.*;
 import creature.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class RunGame {
     public static void main(String[] args) {
         Player gamer = new Player(50);
-        Creature goblin = new Creature("Goblin", 5, 300);
+        Creature goblin = new Creature("Goblin", null, 5, 300);
 
         Card increaseDamageLow = new StatusCard("Sharpened claw", null, CardEffect.INCREASE_LOW);
         Card decreaseDamageLow = new StatusCard("Dulling acid", null, CardEffect.DECREASE_LOW);
@@ -33,7 +34,18 @@ public class RunGame {
         Card chimera = new CreatureCard("Chimera", null, 25, 60);
         gamer.givePlayerCards(List.of(fireBall, thunderBolt, increaseDamageLow, lion, decreaseDamageLow, chimera));
 
+        for (int i = 0; i < gamer.getMaxCardsInHand(); i++) {
+            gamer.drawCard();
+        }
+
         BattleManager battle = new BattleManager(gamer, goblin);
-        battle.battleLoop();
+        battle.startBattle();
+        while (!battle.isVictory()) {
+            System.out.println("Choose card:");
+            Scanner scan = new Scanner(System.in);
+            int handIndex = scan.nextInt();
+            Card chosenCard = battle.getPlayer().getCurrentHand().get(handIndex);
+            battle.battleLoop(chosenCard);
+        }
     }
 }
