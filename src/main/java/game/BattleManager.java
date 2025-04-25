@@ -95,6 +95,7 @@ public class BattleManager {
      */
     private void playerTurn() {
         if (player.getCurrentHand().isEmpty()) {
+            //Cannot use attack cards to directly deal damage, but creatures can still attack.
             attack(0);
         } else {
             System.out.println("Choose your card from indices 0 - " + (player.getCurrentHand().size() - 1));
