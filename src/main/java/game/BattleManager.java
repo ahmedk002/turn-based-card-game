@@ -38,8 +38,6 @@ public class BattleManager {
      * Constructor for the battle manager.
      * @param player the Player involved in the battle
      * @param enemyCreature the enemy Creature
-     *
-     * @author Muhammad Ahmed
      */
     public BattleManager(Player player, Creature enemyCreature) {
         this.player = player;
@@ -53,17 +51,31 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
-    public void battleLoop(Card chosenCard) {
-        System.out.println("----------------------------------");
-        System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
-        playerTurn(chosenCard);
-        checkVictory();
-        checkVictory();
-        enemyTurn();
-        if (checkDefeat()) {
-            System.out.println("You lose!");
+    public void battleLoop() {
+        startBattle();
+        for (int i = 0; i < player.getMaxCardsInHand(); i++) {
+            player.drawCard();
         }
-        removeDefeatedCreatures();
+        while (!victoryStatus) {
+            System.out.println("----------------------------------");
+            System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
+            for (Creature creature : summonedCreatures) {
+                System.out.println(creature.getName() + " health: " + creature.getHealth());
+            }
+            playerTurn();
+            if (checkVictory()) {
+                break;
+            }
+            if (checkVictory()) {
+                break;
+            }
+            enemyTurn();
+            if (checkDefeat()) {
+                System.out.println("You lose!");
+                break;
+            }
+            removeDefeatedCreatures();
+        }
     }
 
     /**
@@ -71,7 +83,7 @@ public class BattleManager {
      *
      * @author Muhammad Ahmed
      */
-    public void startBattle() {
+    private void startBattle() {
         victoryStatus = false;
         System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
