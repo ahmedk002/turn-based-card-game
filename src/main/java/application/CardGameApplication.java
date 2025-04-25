@@ -23,6 +23,7 @@ import game.BattleManager;
 import game.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -76,10 +77,14 @@ public class CardGameApplication extends Application
         stage1.show();
 
         for (int i = 0; i < gamer.getCurrentHand().size(); i++) {
+            int location = i;
             Card card = gamer.getCurrentHand().get(i);
             ImageView cardImage = new ImageView(card.getImage());
             cardImage.relocate(firstHandCardLocation + nextCardLocation * i, handLocation);
-            cardImage.setOnMouseClicked(event -> battle.battleLoop(card));
+            cardImage.setOnMouseClicked(event -> {
+                battle.battleLoop(card);
+                cardImage.setImage(new Image(gamer.getCurrentHand().get(location).getImage()));
+            });
             root.getChildren().add(cardImage);
         }
 
