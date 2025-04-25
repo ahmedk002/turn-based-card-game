@@ -101,6 +101,12 @@ public class BattleManager {
         int damageToEnemy = useCard(chosenCard);
         enemyCreature.takeDamage(damageToEnemy);
         System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
+        for (Creature creature : player.getSummonedCreatures()) {
+            damageToEnemy = creature.getDamage();
+            enemyCreature.takeDamage(damageToEnemy);
+            System.out.println(enemyCreature.getName() + " took " + damageToEnemy + " damage");
+        }
+
     }
 
     /**
