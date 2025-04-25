@@ -77,13 +77,13 @@ public class CardGameApplication extends Application
         stage1.show();
 
         for (int i = 0; i < gamer.getCurrentHand().size(); i++) {
-            int location = i;
             Card card = gamer.getCurrentHand().get(i);
             ImageView cardImage = new ImageView(card.getImage());
             cardImage.relocate(firstHandCardLocation + nextCardLocation * i, handLocation);
             cardImage.setOnMouseClicked(event -> {
-                battle.battleLoop(card);
-                cardImage.setImage(new Image(gamer.getCurrentHand().get(location).getImage()));
+                battle.battleTurns(card);
+
+                cardImage.setImage(new Image(gamer.getCurrentHand().getLast().getImage()));
             });
             root.getChildren().add(cardImage);
         }

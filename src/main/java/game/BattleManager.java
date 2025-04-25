@@ -20,8 +20,8 @@ package game;
 import cards.*;
 import creature.Creature;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Manages battle state between a player and an enemy creature.
@@ -32,7 +32,7 @@ public class BattleManager {
     private final Player player;
     private final Creature enemyCreature;
     private boolean victoryStatus;
-    private final List<Creature> summonedCreatures;
+    private List<Creature> summonedCreatures;
 
     /**
      * Constructor for the battle manager.
@@ -51,31 +51,34 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
+    public void battleTurns(Card chosenCard) {
+        System.out.println("----------------------------------");
+        System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
+        for (Creature creature : summonedCreatures) {
+            System.out.println(creature.getName() + " health: " + creature.getHealth());
+        }
+        playerTurn(chosenCard);
+        checkVictory();
+        enemyTurn();
+        if (checkDefeat()) {
+            System.out.println("You lose!");
+        }
+        removeDefeatedCreatures();
+    }
+
     public void battleLoop() {
-        startBattle();
-        for (int i = 0; i < player.getMaxCardsInHand(); i++) {
-            player.drawCard();
+        System.out.println("----------------------------------");
+        System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
+        for (Creature creature : summonedCreatures) {
+            System.out.println(creature.getName() + " health: " + creature.getHealth());
         }
-        while (!victoryStatus) {
-            System.out.println("----------------------------------");
-            System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
-            for (Creature creature : summonedCreatures) {
-                System.out.println(creature.getName() + " health: " + creature.getHealth());
-            }
-            playerTurn();
-            if (checkVictory()) {
-                break;
-            }
-            if (checkVictory()) {
-                break;
-            }
-            enemyTurn();
-            if (checkDefeat()) {
-                System.out.println("You lose!");
-                break;
-            }
-            removeDefeatedCreatures();
+        attack(0);
+        checkVictory();
+        enemyTurn();
+        if (checkDefeat()) {
+            System.out.println("You lose!");
         }
+        removeDefeatedCreatures();
     }
 
     /**
@@ -83,7 +86,7 @@ public class BattleManager {
      *
      * @author Muhammad Ahmed
      */
-    private void startBattle() {
+    public void startBattle() {
         victoryStatus = false;
         System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
@@ -93,7 +96,7 @@ public class BattleManager {
      *
      * @author Nathan Ramkissoon
      */
-    public void playerTurn(Card chosenCard) {
+    private void playerTurn(Card chosenCard) {
         int damageToEnemy = useCard(chosenCard);
         attack(damageToEnemy);
     }
@@ -211,12 +214,15 @@ public class BattleManager {
      */
     private void removeDefeatedCreatures() {
         if (!summonedCreatures.isEmpty()) {
+            List<Creature> aliveCreatures = new ArrayList<>();
             for (Creature summonedCreature : summonedCreatures) {
-                if (!summonedCreature.isAlive()) {
-                    summonedCreatures.remove(summonedCreature);
+                if (summonedCreature.isAlive()) {
+                    aliveCreatures.add(summonedCreature);
+                } else {
                     System.out.println(summonedCreature.getName() + " was defeated...");
                 }
             }
+            summonedCreatures = aliveCreatures;
         }
     }
 

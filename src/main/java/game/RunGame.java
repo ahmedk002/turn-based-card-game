@@ -40,12 +40,17 @@ public class RunGame {
 
         BattleManager battle = new BattleManager(gamer, goblin);
         battle.startBattle();
-        while (!battle.isVictory()) {
-            System.out.println("Choose card:");
-            Scanner scan = new Scanner(System.in);
-            int handIndex = scan.nextInt();
-            Card chosenCard = battle.getPlayer().getCurrentHand().get(handIndex);
-            battle.battleLoop(chosenCard);
+        while (!battle.checkDefeat()) {
+            if (!gamer.getCurrentHand().isEmpty()) {
+                System.out.println("Choose card:");
+                Scanner scan = new Scanner(System.in);
+                int handIndex = scan.nextInt();
+                Card chosenCard = battle.getPlayer().getCurrentHand().get(handIndex);
+                battle.battleTurns(chosenCard);
+            } else {
+                battle.battleLoop();
+            }
+
         }
     }
 }
