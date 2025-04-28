@@ -34,8 +34,6 @@ import java.util.List;
 
 public class CardGameApplication extends Application {
 
-    //    private Label playerHealthLabel;
-//    private Label enemyHealthLabel;
     private CardGameView view;
 
     public static void main(String[] args) {
