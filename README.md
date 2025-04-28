@@ -24,7 +24,11 @@ Developer: Junbo Feng
 * Major: Computer Science and Engineering
 
 ## Project Information
-*A turn-based card game where you navigate an overworld and defeat enemies.*
+A turn-based card game where you use your deck to defeat an enemy creature that is barring your way. 
+You can summon creatures, buff their damage, heal them, and weaken the enemy creature's damage. You can 
+also use spells to directly damage the enemy creature. You must defeat the creature to attain glorious victory! 
+If all your creatures are defeated, you will be forced to retreat in ignominious defeat, and if you lose all 
+your health, you will DIE!
 
 ## How to run it
 *IMPORTANT - Update this with information about how to build
