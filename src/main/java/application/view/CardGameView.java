@@ -55,6 +55,10 @@ public class CardGameView {
         return root;
     }
 
+    /**
+     * Creates the initial battle screen.
+     * @author Nathan Ramkissoon
+     */
     public void initializeView() {
         root = new Pane();
 
@@ -99,6 +103,10 @@ public class CardGameView {
         root.getChildren().add(summonedCreaturesDisplay);
     }
 
+    /**
+     * Updates the battle screen with the latest information.
+     * @author Nathan Ramkissoon
+     */
     private void updateBattleScreen() {
         // Update health labels
         playerHealthLabel.setText("Player Health: " + battle.getPlayer().getCurrentHealth());
