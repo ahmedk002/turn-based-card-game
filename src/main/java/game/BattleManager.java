@@ -66,6 +66,10 @@ public class BattleManager {
         removeDefeatedCreatures();
     }
 
+    /**
+     * Displays game information if the game is being played using the terminal.
+     * @author Nathan Ramkissoon
+     */
     public void battleLoop() {
         System.out.println("----------------------------------");
         System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
