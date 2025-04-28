@@ -135,10 +135,16 @@ public class BattleManager {
                 damageNumber = usedAttackCard.useAttackCard();
                 break;
             case CardType.CREATURE:
-                CreatureCard usedCreatureCard = (CreatureCard) usedCard;
-                // Gets a creature from the card's information and adds it to the summoned creature list
-                Creature creature = usedCreatureCard.useCreatureCard();
-                summonedCreatures.add(creature);
+                // If there are four summoned creatures already on the field,
+                // then the creature card goes back into the deck
+                if (player.getSummonedCreatures().size() < player.getSummonedCreaturesLimit()) {
+                    CreatureCard usedCreatureCard = (CreatureCard) usedCard;
+                    // Gets a creature from the card's information and adds it to the summoned creature list
+                    Creature creature = usedCreatureCard.useCreatureCard();
+                    summonedCreatures.add(creature);
+                } else {
+                    player.getPlayerDeck().add(usedCard);
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Card has invalid type");

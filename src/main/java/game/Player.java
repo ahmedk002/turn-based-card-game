@@ -30,6 +30,9 @@ public class Player {
     /* Maximum amount of cards the player can have in their hand */
     private final static int MAX_CARDS_IN_HAND = 4;
 
+    /* Maximum amount of cards the player can have in their hand */
+    private final static int SUMMONED_CREATURES_LIMIT = 4;
+
     /* Player's current health */
     private int currentHealth;
 
@@ -123,4 +126,6 @@ public class Player {
     }
 
     public int getMaxCardsInHand() { return MAX_CARDS_IN_HAND; }
+
+    public int getSummonedCreaturesLimit() { return SUMMONED_CREATURES_LIMIT; }
 }
