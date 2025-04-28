@@ -63,37 +63,37 @@ public class StatusCard extends Card {
      * @param creature the creature that the effect will be applied to.
      * @author Riley
      */
-    public void useStatusCard(Creature creature) throws IllegalArgumentException {
-        if (!inTesting) {
-            if (!used) {
-                /*
-                Ask if the player wants to apply the max strength (non-reusable) or the moderate strength
-                (reusable) status.
-                 */
-                System.out.println("Would you like to apply a maximum strength effect? [Y/N]\n"
-                        + "WARNING!!! This will destroy the card. ");
-                String input = sc.nextLine().toUpperCase();
-                while (!validInput(input.substring(0, 1))) {
-                    System.out.println("Invalid input! Try again.");
-                    input = sc.nextLine().toUpperCase();
-                }
-
-                if (input.equals("Y")) {
-                    //Apply maximum strength effect and make card non-reusable.
-                    makeNonReusable();
-                    applyStrongEffect(creature);
-                } else {
-                    //Apply the moderate effect.
-                    applyModerateEffect(creature);
-                }
-                used = true;
-            } else {
-                applyModerateEffect(creature);
-            }
-        } else {
-            testUseStatusCard(creature);
-        }
-    }
+//    public void useStatusCard(Creature creature) throws IllegalArgumentException {
+//        if (!inTesting) {
+//            if (!used) {
+//                /*
+//                Ask if the player wants to apply the max strength (non-reusable) or the moderate strength
+//                (reusable) status.
+//                 */
+//                System.out.println("Would you like to apply a maximum strength effect? [Y/N]\n"
+//                        + "WARNING!!! This will destroy the card. ");
+//                String input = sc.nextLine().toUpperCase();
+//                while (!validInput(input.substring(0, 1))) {
+//                    System.out.println("Invalid input! Try again.");
+//                    input = sc.nextLine().toUpperCase();
+//                }
+//
+//                if (input.equals("Y")) {
+//                    //Apply maximum strength effect and make card non-reusable.
+//                    makeNonReusable();
+//                    applyStrongEffect(creature);
+//                } else {
+//                    //Apply the moderate effect.
+//                    applyModerateEffect(creature);
+//                }
+//                used = true;
+//            } else {
+//                applyModerateEffect(creature);
+//            }
+//        } else {
+//            testUseStatusCard(creature);
+//        }
+//    }
 
     /**
      * This method is used solely to test the functionality of the useStatusCard() method.
@@ -112,6 +112,10 @@ public class StatusCard extends Card {
         } else {
             applyModerateEffect(creature);
         }
+    }
+
+    public void useStatusCard(Creature creature) {
+        applyEffect(creature, effect.getEffect(), effect.getStrengthValue());
     }
 
     /**

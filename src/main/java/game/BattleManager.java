@@ -163,7 +163,7 @@ public class BattleManager {
         int creatureDamage;
         for (Creature creature : player.getSummonedCreatures()) {
             creatureDamage = creature.getDamage();
-            creature.takeDamage(creatureDamage);
+            enemyCreature.takeDamage(creatureDamage);
             System.out.println(creature.getName() + " attacks " + enemyCreature.getName() + "!\n"
                     + enemyCreature.getName() + " took " + creatureDamage + " damage.");
         }

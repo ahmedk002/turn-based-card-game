@@ -15,41 +15,35 @@ package application;/* *****************************************
  * ****************************************
  */
 
-
-
+import application.view.CardGameView;
 import cards.*;
 import creature.Creature;
 import game.BattleManager;
 import game.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
 
-public class CardGameApplication extends Application
-{
+public class CardGameApplication extends Application {
+
+    //    private Label playerHealthLabel;
+//    private Label enemyHealthLabel;
+    private CardGameView view;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public void start(Stage stage1)
-    {
-        Pane root = new Pane();
-
-        int handLocation = 550;
-        int cardWidth = 120;
-        int cardSpace = 30;
-        int firstHandCardLocation = 255;
-        int nextCardLocation = cardWidth + cardSpace;
-        int creatureCardLocationX = 930;
-        int firstCreatureCardLocationY = 0;
-        double creatureScale = 0.75;
-
+    @Override
+    public void start(Stage stage1) {
         Player gamer = new Player(50);
         Creature goblin = new Creature("Goblin", "generic_slime.png", 5, 300);
 
@@ -62,38 +56,11 @@ public class CardGameApplication extends Application
         gamer.givePlayerCards(List.of(fireBall, thunderBolt, increaseDamageLow, lion, decreaseDamageLow, chimera));
 
         BattleManager battle = new BattleManager(gamer, goblin);
-        for (int i = 0; i < gamer.getMaxCardsInHand(); i++) {
-            battle.getPlayer().drawCard();
-        }
 
-        int enemyLocation = 290;
-        ImageView enemy = new ImageView(goblin.getImage());
-        enemy.relocate(enemyLocation, 0);
-        root.getChildren().add(enemy);
-
-        Scene scene1 = new Scene(root, 1080, 740);
-        stage1.setScene(scene1);
+        view = new CardGameView(battle);
+        Scene scene1 = new Scene(view.getRoot(), 1080, 740);
         stage1.setTitle("Turn-Based Card Game");
+        stage1.setScene(scene1);
         stage1.show();
-
-        for (int i = 0; i < gamer.getCurrentHand().size(); i++) {
-            Card card = gamer.getCurrentHand().get(i);
-            ImageView cardImage = new ImageView(card.getImage());
-            cardImage.relocate(firstHandCardLocation + nextCardLocation * i, handLocation);
-            cardImage.setOnMouseClicked(event -> {
-                battle.battleTurns(card);
-
-                cardImage.setImage(new Image(gamer.getCurrentHand().getLast().getImage()));
-            });
-            root.getChildren().add(cardImage);
-        }
-
-        for (int i = 0; i < gamer.getSummonedCreatures().size(); i++) {
-            ImageView cardImage = new ImageView(gamer.getSummonedCreatures().get(i).getImage());
-            cardImage.setPreserveRatio(true);
-            cardImage.setFitWidth(cardWidth * creatureScale);
-            cardImage.relocate(creatureCardLocationX, firstCreatureCardLocationY  + nextCardLocation * i);
-            root.getChildren().addAll(cardImage);
-        }
     }
 }
