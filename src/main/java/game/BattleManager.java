@@ -145,7 +145,7 @@ public class BattleManager {
                     CreatureCard usedCreatureCard = (CreatureCard) usedCard;
                     // Gets a creature from the card's information and adds it to the summoned creature list
                     Creature creature = usedCreatureCard.useCreatureCard();
-                    summonedCreatures.add(creature);
+                    player.getSummonedCreatures().add(creature);
                 } else {
                     player.getPlayerDeck().add(usedCard);
                 }
