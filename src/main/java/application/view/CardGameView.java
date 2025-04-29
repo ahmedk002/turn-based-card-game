@@ -119,12 +119,11 @@ public class CardGameView {
 
         // Update summoned creatures
         summonedCreaturesDisplay.getChildren().clear();
-        for (int i = 0; i < battle.getPlayer().getSummonedCreatures().size(); i++) {
-            Creature creature = battle.getPlayer().getSummonedCreatures().get(i);
-            ImageView cardImage = new ImageView(new Image(creature.getImage()));
-            cardImage.setPreserveRatio(true);
-            cardImage.setFitWidth(cardWidth * creatureScale);
-            summonedCreaturesDisplay.getChildren().add(cardImage);
+        for (Creature creature : battle.getPlayer().getSummonedCreatures()) {
+            ImageView creatureImage = new ImageView(new Image(creature.getImage()));
+            creatureImage.setPreserveRatio(true);
+            creatureImage.setFitWidth(cardWidth * creatureScale);
+            summonedCreaturesDisplay.getChildren().add(creatureImage);
         }
     }
 }
