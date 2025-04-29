@@ -40,7 +40,7 @@ public class RunGame {
 
         BattleManager battle = new BattleManager(gamer, goblin);
         battle.startBattle();
-        while (!battle.checkDefeat()) {
+        while (!battle.isDefeat()) {
             if (!gamer.getCurrentHand().isEmpty()) {
                 System.out.println("Choose card:");
                 Scanner scan = new Scanner(System.in);
@@ -48,7 +48,7 @@ public class RunGame {
                 Card chosenCard = battle.getPlayer().getCurrentHand().get(handIndex);
                 battle.battleTurns(chosenCard);
             } else {
-                battle.battleLoop();
+                battle.battleTurns(null);
             }
 
         }

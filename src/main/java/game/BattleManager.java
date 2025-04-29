@@ -32,6 +32,7 @@ public class BattleManager {
     private final Player player;
     private final Creature enemyCreature;
     private boolean victoryStatus;
+    private boolean defeatStatus;
     private List<Creature> summonedCreatures;
 
     /**
@@ -43,6 +44,7 @@ public class BattleManager {
         this.player = player;
         this.enemyCreature = enemyCreature;
         this.victoryStatus = false;
+        this.defeatStatus = false;
         this.summonedCreatures = player.getSummonedCreatures();
     }
 
@@ -60,9 +62,7 @@ public class BattleManager {
         playerTurn(chosenCard);
         checkVictory();
         enemyTurn();
-        if (checkDefeat()) {
-            System.out.println("You lose!");
-        }
+        checkDefeat();
         removeDefeatedCreatures();
     }
 
@@ -79,9 +79,7 @@ public class BattleManager {
         attack(0);
         checkVictory();
         enemyTurn();
-        if (checkDefeat()) {
-            System.out.println("You lose!");
-        }
+        checkDefeat();
         removeDefeatedCreatures();
     }
 
@@ -114,6 +112,11 @@ public class BattleManager {
      * @author Nathan Ramkissoon
      */
     private int useCard(Card usedCard) {
+        // usedCard is null when player runs out of cards or has skipped their turn
+        if (usedCard == null) {
+            return 0;
+        }
+
         // Initialized to 0, as status and creature cards do no damage
         int damageNumber = 0;
         // Checks what type the card is, and calls the correct method
@@ -184,11 +187,10 @@ public class BattleManager {
      *
      * @author Muhammad Ahmed
      */
-    private boolean checkVictory() {
+    private void checkVictory() {
         if (!enemyCreature.isAlive()) {
             victoryStatus = true;
         }
-        return victoryStatus;
     }
 
     /**
@@ -209,11 +211,9 @@ public class BattleManager {
 
     /**
      * Checks if the player is dead or their current hand is empty, meaning they ran out of cards
-     *
-     * @return boolean that shows if the player is defeated
      */
-    public boolean checkDefeat() {
-        return !player.getIfAlive() ||
+    public void checkDefeat() {
+        defeatStatus = !player.getIfAlive() ||
                 (player.getSummonedCreatures().isEmpty() && player.getCurrentHand().isEmpty());
     }
 
@@ -251,4 +251,6 @@ public class BattleManager {
     public boolean isVictory() {
         return victoryStatus;
     }
+
+    public boolean isDefeat() { return defeatStatus; }
 }
