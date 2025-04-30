@@ -43,7 +43,7 @@ public class CardGameApplication extends Application {
     @Override
     public void start(Stage stage1) {
         Player gamer = new Player(50);
-        Creature goblin = new Creature("Goblin", "generic_slime.png", 5, 300);
+        Creature goblin = new Creature("Slime", "generic_slime.png", 5, 300);
 
         Card increaseDamageLow = new StatusCard("Low Damage Increase", "blank_buff_card.png", CardEffect.INCREASE_LOW);
         Card decreaseDamageLow = new StatusCard("Low Damage Decrease", "blank_debuff_card.png", CardEffect.DECREASE_LOW);
