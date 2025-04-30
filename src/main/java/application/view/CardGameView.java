@@ -20,6 +20,7 @@ package application.view;
 import cards.Card;
 import creature.Creature;
 import game.BattleManager;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,20 +32,20 @@ public class CardGameView {
     private Pane root;
     private Label playerHealthLabel;
     private Label enemyHealthLabel;
+    private Button skipButton;
     private ImageView enemy;
     private HBox handDisplay;
     private VBox summonedCreaturesDisplay;
-    private BattleManager battle;
+    private final BattleManager battle;
 
-    private int handLocation = 550;
-    private int cardWidth = 120;
-    private int cardSpace = 30;
-    private int firstHandCardLocation = 255;
-    private int nextCardLocation = cardWidth + cardSpace;
-    private int creatureCardLocationX = 930;
-    private int firstCreatureCardLocationY = 0;
-    private double creatureScale = 0.75;
-    private int enemyLocation = 290;
+    private final static int HAND_LOCATION = 550;
+    private final static int CARD_WIDTH = 120;
+    private final static int CARD_SPACE = 30;
+    private final static int FIRST_HAND_CARD_LOCATION = 255;
+    private final static int CREATURES_LOCATION = 930;
+    private final static int FIRST_CREATURE_LOCATION = 0;
+    private final static double CREATURE_SCALE = 0.75;
+    private final static int ENEMY_LOCATION = 290;
 
     public CardGameView(BattleManager battle) {
         this.battle = battle;
@@ -57,7 +58,8 @@ public class CardGameView {
 
     /**
      * Creates the initial battle screen.
-     * @author Nathan Ramkissoon
+     *
+     * @author Nathan Ramkissoon & Muhammad Ahmed
      */
     public void initializeView() {
         root = new Pane();
@@ -68,7 +70,7 @@ public class CardGameView {
 
         // Enemy setup
         enemy = new ImageView(battle.getEnemyCreature().getImage());
-        enemy.relocate(enemyLocation, 0);
+        enemy.relocate(ENEMY_LOCATION, 0);
         root.getChildren().add(enemy);
 
         // Health labels
@@ -80,9 +82,18 @@ public class CardGameView {
         enemyHealthLabel.relocate(800, 20);
         root.getChildren().add(enemyHealthLabel);
 
+        // Skip button
+        skipButton = new Button("SKIP TURN");
+        skipButton.setOnMousePressed(event -> {
+            battle.battleTurns(null);
+            updateBattleScreen();
+        });
+        skipButton.relocate(50,600);
+        root.getChildren().add(skipButton);
+
         // Cards in hand
-        handDisplay = new HBox(cardSpace);
-        handDisplay.relocate(firstHandCardLocation, handLocation);
+        handDisplay = new HBox(CARD_SPACE);
+        handDisplay.relocate(FIRST_HAND_CARD_LOCATION, HAND_LOCATION);
         root.getChildren().add(handDisplay);
 
         for (int i = 0; i < battle.getPlayer().getCurrentHand().size(); i++) {
@@ -98,14 +109,15 @@ public class CardGameView {
         }
 
         // Summoned creatures
-        summonedCreaturesDisplay = new VBox(cardSpace);
-        summonedCreaturesDisplay.relocate(creatureCardLocationX, firstCreatureCardLocationY);
+        summonedCreaturesDisplay = new VBox(CARD_SPACE);
+        summonedCreaturesDisplay.relocate(CREATURES_LOCATION, FIRST_CREATURE_LOCATION);
         root.getChildren().add(summonedCreaturesDisplay);
     }
 
     /**
      * Updates the battle screen with the latest information.
-     * @author Nathan Ramkissoon
+     *
+     * @author Muhammad Ahmed & Nathan Ramkissoon
      */
     private void updateBattleScreen() {
         // Update health labels
@@ -127,12 +139,18 @@ public class CardGameView {
 
         // Update summoned creatures
         summonedCreaturesDisplay.getChildren().clear();
-        for (int i = 0; i < battle.getPlayer().getSummonedCreatures().size(); i++) {
-            Creature creature = battle.getPlayer().getSummonedCreatures().get(i);
-            ImageView cardImage = new ImageView(new Image(creature.getImage()));
-            cardImage.setPreserveRatio(true);
-            cardImage.setFitWidth(cardWidth * creatureScale);
-            summonedCreaturesDisplay.getChildren().add(cardImage);
+        for (Creature creature : battle.getPlayer().getSummonedCreatures()) {
+            ImageView creatureImage = new ImageView(new Image(creature.getImage()));
+            creatureImage.setPreserveRatio(true);
+            creatureImage.setFitWidth(CARD_WIDTH * CREATURE_SCALE);
+            summonedCreaturesDisplay.getChildren().add(creatureImage);
+        }
+
+        if (battle.isVictory()) {
+            root.getChildren().remove(enemy);
+            root.getChildren().remove(skipButton);
+        } else if (battle.isDefeat()) {
+            root.getChildren().remove(skipButton);
         }
     }
 }

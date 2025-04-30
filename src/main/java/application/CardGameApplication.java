@@ -51,7 +51,7 @@ public class CardGameApplication extends Application {
         Card thunderBolt = new AttackCard("Thunder Bolt", "blank_attack_card.png", 10);
         Card lion = new CreatureCard("Lion", "blank_creature_card.png", 10, 40);
         Card chimera = new CreatureCard("Chimera", "blank_creature_card.png", 25, 60);
-        gamer.givePlayerCards(List.of(fireBall, thunderBolt, increaseDamageLow, lion, decreaseDamageLow, chimera));
+        gamer.givePlayerCards(List.of(lion, chimera, fireBall, thunderBolt, increaseDamageLow, decreaseDamageLow));
 
         BattleManager battle = new BattleManager(gamer, goblin);
 
