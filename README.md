@@ -33,4 +33,11 @@ your health, you will DIE!
 ## How to run it
 *IMPORTANT - Update this with information about how to build
 and run your project!*
-The game is run using the CardGameApplication file. 
+The game is run using the CardGameApplication file. You will be presented with a screen with an enemy creature. Your 
+health and that of the enemy creature are listed at the top of the screen. 
+At the bottom of the screen, you can see your cards. Creature cards can be used to summon creatures. These creatures will 
+appear on the left side of the screen and will attack the enemy creature every turn. Attack cards allow you to deal damage 
+directly to the creature as well. Finally, status cards can apply buffs to your roster of summoned creatures, or debuff 
+the enemy. These buffs include heals and damage increases, while the debuff is a decrease to the enemy's damage. 
+You can have a maximum of four cards in your hand, and can play one card every turn. If you wish to skip your turn, you 
+may do so by clicking the "skip turn" button next to your hand. 
