@@ -52,6 +52,10 @@ public class AttackCard extends Card {
         this.damage = damage;
     }
 
+    /**
+     * Uses the attack card to deal damage.
+     * @return the amount of damage dealt by the card.
+     */
     public int useAttackCard() {
         return getDamage();
     }
