@@ -21,6 +21,9 @@ import creature.*;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Deprecated class originally used to play the game using the terminal. Use CardGameApplication instead!!!
+ */
 public class RunGame {
     public static void main(String[] args) {
         Player gamer = new Player(50);
