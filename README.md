@@ -32,4 +32,5 @@ your health, you will DIE!
 
 ## How to run it
 *IMPORTANT - Update this with information about how to build
-and run your project!
+and run your project!*
+The game is run using the CardGameApplication file. 
