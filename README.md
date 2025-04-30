@@ -31,8 +31,6 @@ If all your creatures are defeated, you will be forced to retreat in ignominious
 your health, you will DIE!
 
 ## How to run it
-*IMPORTANT - Update this with information about how to build
-and run your project!*
 The game is run using the CardGameApplication file. You will be presented with a screen with an enemy creature. Your 
 health and that of the enemy creature are listed at the top of the screen. 
 At the bottom of the screen, you can see your cards. Creature cards can be used to summon creatures. These creatures will 
