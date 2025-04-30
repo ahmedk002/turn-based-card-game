@@ -52,11 +52,14 @@ public class BattleManager {
      * @author Nathan Ramkissoon
      */
     public void battleTurns(Card chosenCard) {
+        /*
+        Unnecessary print statements.
         System.out.println("----------------------------------");
         System.out.println("Enemy health: " + enemyCreature.getHealth() + "\nPlayer Health: " + player.getCurrentHealth());
         for (Creature creature : summonedCreatures) {
-            System.out.println(creature.getName() + " health: " + creature.getHealth());
+            //System.out.println(creature.getName() + " health: " + creature.getHealth());
         }
+        */
         playerTurn(chosenCard);
         checkVictory();
         enemyTurn();
