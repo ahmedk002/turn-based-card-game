@@ -41,3 +41,7 @@ the enemy. These buffs include heals and damage increases, while the debuff is a
 
 You can have a maximum of four cards in your hand, and can play one card every turn. If you wish to skip your turn, you 
 may do so by clicking the "skip turn" button next to your hand. 
+
+## 3rd Party Libraries
+
+## Video Presentation
