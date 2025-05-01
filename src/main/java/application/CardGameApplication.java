@@ -43,17 +43,18 @@ public class CardGameApplication extends Application {
     @Override
     public void start(Stage stage1) {
         Player gamer = new Player(50);
-        Creature goblin = new Creature("Goblin", "generic_slime.png", 5, 300);
+        Creature slime = new Creature("Slime", "generic_slime.png", 5, 300);
 
-        Card increaseDamageLow = new StatusCard("Low Damage Increase", "blank_buff_card.png", CardEffect.INCREASE_LOW);
-        Card decreaseDamageLow = new StatusCard("Low Damage Decrease", "blank_debuff_card.png", CardEffect.DECREASE_LOW);
-        Card fireBall = new AttackCard("Fire Ball", "blank_attack_card.png", 10);
+        Card razorSharpen = new StatusCard("Razor Sharpen", "razorsharpen.png", CardEffect.INCREASE_LOW);
+        Card weakeningPoison = new StatusCard("Weakening Poison", "weakeningpoison.png", CardEffect.DECREASE_LOW);
+        Card fireBall = new AttackCard("Fire Ball", "fireball.png", 10);
         Card thunderBolt = new AttackCard("Thunder Bolt", "blank_attack_card.png", 10);
         Card lion = new CreatureCard("Lion", "blank_creature_card.png", 10, 40);
         Card chimera = new CreatureCard("Chimera", "blank_creature_card.png", 25, 60);
-        gamer.givePlayerCards(List.of(lion, chimera, fireBall, thunderBolt, increaseDamageLow, decreaseDamageLow));
+        gamer.givePlayerCards(List.of(lion, chimera, fireBall, thunderBolt, razorSharpen, weakeningPoison));
 
-        BattleManager battle = new BattleManager(gamer, goblin);
+        BattleManager battle = new BattleManager(gamer, slime);
+        battle.startBattle();
 
         view = new CardGameView(battle);
         Scene scene1 = new Scene(view.getRoot(), 1080, 740);

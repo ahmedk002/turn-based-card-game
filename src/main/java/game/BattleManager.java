@@ -90,6 +90,7 @@ public class BattleManager {
      */
     public void startBattle() {
         victoryStatus = false;
+        defeatStatus = false;
         System.out.println("Battle started between player and enemy: " + enemyCreature.getName());
     }
 
