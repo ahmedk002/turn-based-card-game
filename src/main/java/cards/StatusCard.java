@@ -121,7 +121,7 @@ public class StatusCard extends Card {
      * @param creature the creature to apply the effect to.
      */
     public void useStatusCard(Creature creature) {
-        applyEffect(creature, effect.getEffect(), effect.getStrengthValue());
+        applyStrongEffect(creature);
     }
 
     /**
