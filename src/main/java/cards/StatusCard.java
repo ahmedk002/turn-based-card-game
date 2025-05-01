@@ -28,7 +28,8 @@ public class StatusCard extends Card {
     private final boolean inTesting; //Used for testing purposes.
     private final boolean reuse; //Used for testing purposes.
 
-    private static final boolean IS_REUSABLE = true;
+    //All cards are currently single-use, including status cards.
+    private static final boolean IS_REUSABLE = false;
     private static final CardType CARD_TYPE = CardType.STATUS;
 
     /**
@@ -60,6 +61,7 @@ public class StatusCard extends Card {
      *     being immediately destroyed, while the moderate effect is half-strength but
      *     the card is not destroyed.
      *     Uses helper methods to get the effect and apply it to each creature.
+     *     Currently out of date.
      * @param creature the creature that the effect will be applied to.
      * @author Riley
      */
@@ -114,6 +116,10 @@ public class StatusCard extends Card {
         }
     }
 
+    /**
+     * Applies the maximum effect of the status card.
+     * @param creature the creature to apply the effect to.
+     */
     public void useStatusCard(Creature creature) {
         applyEffect(creature, effect.getEffect(), effect.getStrengthValue());
     }
