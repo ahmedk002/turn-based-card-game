@@ -29,8 +29,8 @@ public class RunGame {
         Player gamer = new Player(50);
         Creature goblin = new Creature("Goblin", null, 5, 300);
 
-        Card increaseDamageLow = new StatusCard("Sharpened claw", null, CardEffect.INCREASE_LOW);
-        Card decreaseDamageLow = new StatusCard("Dulling acid", null, CardEffect.DECREASE_LOW);
+        Card increaseDamageLow = new StatusCard("Sharpened claw", null, CardEffect.INCREASE_LOW, false);
+        Card decreaseDamageLow = new StatusCard("Dulling acid", null, CardEffect.DECREASE_LOW, false);
         Card fireBall = new AttackCard("Fire Ball", null, 10);
         Card thunderBolt = new AttackCard("Thunder Bolt", null, 10);
         Card lion = new CreatureCard("Lion", null, 10, 40);
@@ -43,7 +43,7 @@ public class RunGame {
 
         BattleManager battle = new BattleManager(gamer, goblin);
         battle.startBattle();
-        while (!battle.isDefeat()) {
+        while (!battle.isDefeated()) {
             if (!gamer.getCurrentHand().isEmpty()) {
                 System.out.println("Choose card:");
                 Scanner scan = new Scanner(System.in);

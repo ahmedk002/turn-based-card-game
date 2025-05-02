@@ -20,6 +20,7 @@ package application.view;
 import cards.Card;
 import creature.Creature;
 import game.BattleManager;
+import game.Player;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -64,7 +65,7 @@ public class CardGameView {
     public void initializeView() {
         root = new Pane();
 
-        for (int i = 0; i < battle.getPlayer().getMaxCardsInHand(); i++) {
+        for (int i = 0; i < Player.getMaxCardsInHand(); i++) {
             battle.getPlayer().drawCard();
         }
 
@@ -78,7 +79,7 @@ public class CardGameView {
         playerHealthLabel.relocate(50, 20);
         root.getChildren().add(playerHealthLabel);
 
-        enemyHealthLabel = new Label("Enemy Health: " + battle.getEnemyCreature().getHealth());
+        enemyHealthLabel = new Label("Enemy Health: " + battle.getEnemyCreature().getCurrentHealth());
         enemyHealthLabel.relocate(800, 20);
         root.getChildren().add(enemyHealthLabel);
 
@@ -122,7 +123,7 @@ public class CardGameView {
     private void updateBattleScreen() {
         // Update health labels
         playerHealthLabel.setText("Player Health: " + battle.getPlayer().getCurrentHealth());
-        enemyHealthLabel.setText("Enemy Health: " + battle.getEnemyCreature().getHealth());
+        enemyHealthLabel.setText("Enemy Health: " + battle.getEnemyCreature().getCurrentHealth());
 
         // Update cards
         handDisplay.getChildren().clear();
@@ -149,7 +150,7 @@ public class CardGameView {
         if (battle.isVictory()) {
             root.getChildren().remove(enemy);
             root.getChildren().remove(skipButton);
-        } else if (battle.isDefeat()) {
+        } else if (battle.isDefeated()) {
             root.getChildren().remove(skipButton);
         }
     }

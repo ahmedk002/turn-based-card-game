@@ -50,20 +50,20 @@ public class CreatureCardTest {
         assertFalse(lion.equals(null));
         assertTrue(lion.getName().equals("Lion"));
         assertTrue(lion.getDamage() == 10);
-        assertTrue(lion.getHealth() == 10);
+        assertTrue(lion.getCurrentHealth() == 10);
 
         CreatureCard pigeonCard = (CreatureCard) card2;
         Creature pigeon = pigeonCard.useCreatureCard();
         assertFalse(pigeon.equals(null));
         assertTrue(pigeon.getName().equals("Pigeon"));
         assertTrue(pigeon.getDamage() == 5);
-        assertTrue(pigeon.getHealth() == 5);
+        assertTrue(pigeon.getCurrentHealth() == 5);
 
         CreatureCard sharkCard = (CreatureCard) card3;
         Creature shark = sharkCard.useCreatureCard();
         assertFalse(shark.equals(null));
         assertTrue(shark.getName().equals("Shark"));
         assertTrue(shark.getDamage() == 5);
-        assertTrue(shark.getHealth() == 10);
+        assertTrue(shark.getCurrentHealth() == 10);
     }
 }

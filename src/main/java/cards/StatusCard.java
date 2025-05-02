@@ -19,17 +19,9 @@ package cards;
 
 import creature.Creature;
 
-import java.util.Scanner;
-
 public class StatusCard extends Card {
-    private boolean used;
-    private final CardEffect effect;
-    private final Scanner sc = new Scanner(System.in);
-    private final boolean inTesting; //Used for testing purposes.
-    private final boolean reuse; //Used for testing purposes.
+    private final CardEffect cardEffect;
 
-    //All cards are currently single-use, including status cards.
-    private static final boolean IS_REUSABLE = false;
     private static final CardType CARD_TYPE = CardType.STATUS;
 
     /**
@@ -38,87 +30,16 @@ public class StatusCard extends Card {
      * @param image a String for the image of the card.
      * @param effect a CardEffect enum representing the effect the card has.
      */
-    public StatusCard (String name, String image, CardEffect effect) {
-        super(name, image, CARD_TYPE, IS_REUSABLE);
-        this.effect = effect;
-        used = false;
-        inTesting = false;
-        reuse = false;
-    }
-
     public StatusCard (String name, String image, CardEffect effect, boolean reusable) {
-        super(name, image, CARD_TYPE, IS_REUSABLE);
-        this.effect = effect;
-        used = false;
-        inTesting = true;
-        this.reuse = reusable;
+        super(name, image, CARD_TYPE, reusable);
+        this.cardEffect = effect;
     }
 
     /**
      * Uses a status card to apply an upgrade to each one of the player's creatures.
-     *     If this is the first use, the function first asks if the player wants to
-     *     apply a strong or moderate effect. The strong effect results in the card
-     *     being immediately destroyed, while the moderate effect is half-strength but
-     *     the card is not destroyed.
-     *     Uses helper methods to get the effect and apply it to each creature.
-     *     Currently out of date.
-     * @param creature the creature that the effect will be applied to.
-     * @author Riley
-     */
-//    public void useStatusCard(Creature creature) throws IllegalArgumentException {
-//        if (!inTesting) {
-//            if (!used) {
-//                /*
-//                Ask if the player wants to apply the max strength (non-reusable) or the moderate strength
-//                (reusable) status.
-//                 */
-//                System.out.println("Would you like to apply a maximum strength effect? [Y/N]\n"
-//                        + "WARNING!!! This will destroy the card. ");
-//                String input = sc.nextLine().toUpperCase();
-//                while (!validInput(input.substring(0, 1))) {
-//                    System.out.println("Invalid input! Try again.");
-//                    input = sc.nextLine().toUpperCase();
-//                }
-//
-//                if (input.equals("Y")) {
-//                    //Apply maximum strength effect and make card non-reusable.
-//                    makeNonReusable();
-//                    applyStrongEffect(creature);
-//                } else {
-//                    //Apply the moderate effect.
-//                    applyModerateEffect(creature);
-//                }
-//                used = true;
-//            } else {
-//                applyModerateEffect(creature);
-//            }
-//        } else {
-//            testUseStatusCard(creature);
-//        }
-//    }
-
-    /**
-     * This method is used solely to test the functionality of the useStatusCard() method.
-     *     It bypasses the need for user input.
-     * @param creature the Creature that the effect will be applied to.
-     */
-    private void testUseStatusCard(Creature creature) {
-        if (!used) {
-            if (!reuse) {
-                makeNonReusable();
-                applyStrongEffect(creature);
-            } else {
-                applyModerateEffect(creature);
-            }
-            used = true;
-        } else {
-            applyModerateEffect(creature);
-        }
-    }
-
-    /**
-     * Applies the maximum effect of the status card.
-     * @param creature the creature to apply the effect to.
+     * Currently only applies a card's maximum effect
+     *
+     * @param creature Creature that the effect will be applied to
      */
     public void useStatusCard(Creature creature) {
         applyStrongEffect(creature);
@@ -127,31 +48,35 @@ public class StatusCard extends Card {
     /**
      * Gets the details and strength of the status card's effect.
      *     Upgrade -> gotten from the getEffect() method. May be a damage upgrade, a
-     *     damage nerf, or a heal.
+     *     damage nerf, or heal.
      *     Strength -> the strength of the upgrade, gotten from the getStrengthValue() method.
      *     applyEffect() -> another helper method that will apply the effect to each creature.
+     *
      * @param creature the creature the effect will be applied to.
+     *
      * @author Riley
      */
     private void applyStrongEffect(Creature creature) {
-        String upgrade = effect.getEffect();
-        int strength = effect.getStrengthValue();
+        String upgrade = cardEffect.getEffect();
+        int strength = cardEffect.getStrengthValue();
         applyEffect(creature, upgrade, strength);
     }
 
     /**
      * Gets the details and strength of the status card's effect.
      *     Upgrade -> gotten from the getEffect() method. May be a damage upgrade, a
-     *     damage nerf, or a heal.
+     *     damage nerf, or heal.
      *     Strength -> the strength of the upgrade, gotten from the getStrengthValue() method.
      *     The strength is half of what the method returns, since it is only a moderate effect.
      *     applyEffect() -> another helper method that will apply the effect to each creature.
+     *
      * @param creature the creature the effect will be applied to.
+     *
      * @author Riley
      */
     private void applyModerateEffect(Creature creature) {
-        String upgrade = effect.getEffect();
-        int strength= effect.getStrengthValue() / 2;
+        String upgrade = cardEffect.getEffect();
+        int strength= cardEffect.getStrengthValue() / 2;
         applyEffect(creature, upgrade, strength);
     }
 
@@ -174,21 +99,7 @@ public class StatusCard extends Card {
         }
     }
 
-    /**
-     * Helper method to validate input from the Scanner call.
-     * @param input a single character String that should be either "Y" or "N".
-     * @return true if the input is either "Y" or "N", and false otherwise.
-     * @author Riley
-     */
-    private boolean validInput(String input) {
-        if (input.equals("Y") || input.equals("N")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public CardEffect getCardEffect() {
-        return effect;
+        return cardEffect;
     }
 }
