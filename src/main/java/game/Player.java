@@ -46,7 +46,7 @@ public class Player {
     private final Queue<Card> playerDeck;
 
     /* List of all creatures the player has summoned */
-    private final List<Creature> summonedCreatures;
+    private List<Creature> summonedCreatures;
 
     public Player(int maxHealth) {
         currentHealth = maxHealth;
@@ -105,11 +105,28 @@ public class Player {
         }
     }
 
+    /**
+     * Removes creatures from the summoned creatures list if they are defeated
+     *
+     * @author Nathan Ramkissoon
+     */
+    public void removeDefeatedCreatures() {
+        if (!summonedCreatures.isEmpty()) {
+            List<Creature> aliveCreatures = new ArrayList<>();
+            for (Creature summonedCreature : summonedCreatures) {
+                if (summonedCreature.isAlive()) {
+                    aliveCreatures.add(summonedCreature);
+                }
+            }
+            summonedCreatures = aliveCreatures;
+        }
+    }
+
     public List<Card> getCurrentHand() {
         return currentHand;
     }
 
-    public boolean getIfAlive() {
+    public boolean isAlive() {
         return isAlive;
     }
 
@@ -125,7 +142,7 @@ public class Player {
         return playerDeck;
     }
 
-    public int getMaxCardsInHand() { return MAX_CARDS_IN_HAND; }
+    public static int getMaxCardsInHand() { return MAX_CARDS_IN_HAND; }
 
-    public int getSummonedCreaturesLimit() { return SUMMONED_CREATURES_LIMIT; }
+    public static int getSummonedCreaturesLimit() { return SUMMONED_CREATURES_LIMIT; }
 }

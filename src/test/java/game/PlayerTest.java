@@ -35,7 +35,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         player = new Player(50);
-        card1 = new StatusCard("Status Card", null, CardEffect.INCREASE_LOW);
+        card1 = new StatusCard("Status Card", null, CardEffect.INCREASE_LOW, false);
         card2 = new AttackCard("Attack Card", null, 30);
         card3 = new CreatureCard("Creature 1", null, 10, 40);
         card4 = new CreatureCard("Creature 2", null, 20, 20);
@@ -47,7 +47,7 @@ public class PlayerTest {
      */
     @Test
     void playerIsAlive() {
-        assertTrue(player.getIfAlive());
+        assertTrue(player.isAlive());
         assertEquals(50, player.getCurrentHealth());
     }
 
@@ -57,7 +57,7 @@ public class PlayerTest {
     @Test
     void playerIsDeadExactDamage() {
         player.takeDamage(50);
-        assertFalse(player.getIfAlive());
+        assertFalse(player.isAlive());
         assertEquals(0, player.getCurrentHealth());
     }
 
@@ -67,7 +67,7 @@ public class PlayerTest {
     @Test
     void playerIsDeadOverDamage() {
         player.takeDamage(60);
-        assertFalse(player.getIfAlive());
+        assertFalse(player.isAlive());
         assertEquals(0, player.getCurrentHealth());
     }
 

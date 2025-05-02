@@ -22,12 +22,6 @@ import game.BattleManager;
 import game.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -45,8 +39,8 @@ public class CardGameApplication extends Application {
         Player gamer = new Player(50);
         Creature slime = new Creature("Slime", "generic_slime.png", 5, 300);
 
-        Card razorSharpen = new StatusCard("Razor Sharpen", "razorsharpen.png", CardEffect.INCREASE_LOW);
-        Card weakeningPoison = new StatusCard("Weakening Poison", "weakeningpoison.png", CardEffect.DECREASE_LOW);
+        Card razorSharpen = new StatusCard("Razor Sharpen", "razorsharpen.png", CardEffect.INCREASE_LOW, false);
+        Card weakeningPoison = new StatusCard("Weakening Poison", "weakeningpoison.png", CardEffect.DECREASE_LOW, false);
         Card fireBall = new AttackCard("Fire Ball", "fireball.png", 10);
         Card thunderBolt = new AttackCard("Thunder Bolt", "blank_attack_card.png", 10);
         Card lion = new CreatureCard("Lion", "blank_creature_card.png", 10, 40);

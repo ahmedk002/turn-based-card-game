@@ -25,11 +25,13 @@ public class AttackCard extends Card {
 
     /**
      * Creates an AttackCard using the Card constructor. This is the default constructor.
+     *
      * @param name a String representing the name of the card. Will be passed to the
      *             Card constructor.
      * @param image a String representing the image of the card. Will be passed to the
      *              Card constructor.
      * @param damage the amount of damage this card will deal, as an int.
+     *
      * @author Riley
      */
     public AttackCard(String name, String image, int damage) {
@@ -38,22 +40,8 @@ public class AttackCard extends Card {
     }
 
     /**
-     * Creates an AttackCard using the Card constructor. This is used by CreatureCard.
-     * @param name a String representing the name of the card. Will be passed to the
-     *             Card constructor.
-     * @param image a String representing the image of the card. Will be passed to the
-     *              Card constructor.
-     * @param damage the amount of damage dealt by the creature in a single hit, as an int.
-     * @param type a CardType object representing the type of card. Should be CREATURE.
-     * @author Riley
-     */
-    public AttackCard(String name, String image, int damage, CardType type) {
-        super(name, image, type, IS_REUSABLE);
-        this.damage = damage;
-    }
-
-    /**
      * Uses the attack card to deal damage.
+     *
      * @return the amount of damage dealt by the card.
      */
     public int useAttackCard() {

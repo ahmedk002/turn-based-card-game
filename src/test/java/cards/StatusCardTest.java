@@ -17,7 +17,6 @@
 
 package cards;
 
-import game.Player;
 import creature.Creature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,7 @@ public class StatusCardTest {
 
     @BeforeEach
     void setUp() {
-        creature = new Creature("Friendly Lion", 10, 10);
+        creature = new Creature("Friendly Lion", null, 10, 10);
 
         //Create a set of three reusable StatusCards (one with each effect).
         damageIncreaseCard1 = new StatusCard("Sharpened claw", null, effect1, true);
@@ -93,12 +92,12 @@ public class StatusCardTest {
 
     @Test
     void testHeal() {
-        assertTrue(creature.getHealth() == 10);
+        assertTrue(creature.getCurrentHealth() == 10);
         StatusCard card = (StatusCard) healCard1;
 
         //Ensure that the creature cannot heal above its max health.
         card.useStatusCard(creature);
-        assertTrue(creature.getHealth() == 10);
+        assertTrue(creature.getCurrentHealth() == 10);
 
         /*
         Damage creature first, then heal it by greater than the amount of damage taken.
@@ -106,20 +105,20 @@ public class StatusCardTest {
         */
         creature.takeDamage(1);
         card.useStatusCard(creature);
-        assertTrue(creature.getHealth() == 10);
+        assertTrue(creature.getCurrentHealth() == 10);
 
         //Deal a lot of damage to the creature to test the exact amount it heals.
         creature.takeDamage(5);
         card.useStatusCard(creature);
-        assertTrue(creature.getHealth() == 7);
+        assertTrue(creature.getCurrentHealth() == 7);
     }
 
     @Test
     void testNonreusableHeal() {
-        assertTrue(creature.getHealth() == 10);
+        assertTrue(creature.getCurrentHealth() == 10);
         creature.takeDamage(6);
         StatusCard card = (StatusCard) healCard2;
         card.useStatusCard(creature);
-        assertTrue(creature.getHealth() == 9);
+        assertTrue(creature.getCurrentHealth() == 9);
     }
 }

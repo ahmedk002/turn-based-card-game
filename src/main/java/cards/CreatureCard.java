@@ -19,10 +19,12 @@ package cards;
 
 import creature.Creature;
 
-public class CreatureCard extends AttackCard {
+public class CreatureCard extends Card {
     private final int health;
+    private final int damage;
 
     private static final CardType CARD_TYPE = CardType.CREATURE;
+    private static final boolean IS_REUSABLE = false;
 
     /**
      * Constructor to create a new creature card.
@@ -35,18 +37,24 @@ public class CreatureCard extends AttackCard {
      * @author Riley
      */
     public CreatureCard(String name, String image, int damage, int health) {
-        super(name, image, damage, CARD_TYPE);
+        super(name, image, CARD_TYPE, IS_REUSABLE);
         this.health = health;
+        this.damage = damage;
     }
 
     /**
      * Uses a creature card to spawn a creature with the name, damage, and health attributes
      *     stored by the card.
-     * @return the new Creature card.
+     *
+     * @return the new Creature
+     *
      * @author Riley
      */
     public Creature useCreatureCard() {
-        Creature creature = new Creature(this.getName(), this.getImage(), this.getDamage(), health);
-        return creature;
+        return new Creature(this.getName(), this.getImage(), this.getDamage(), health);
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

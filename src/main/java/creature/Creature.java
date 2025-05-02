@@ -26,8 +26,7 @@ public class Creature {
     private int damage;
     private int currentHealth;
     private boolean isAlive;
-
-    private final int MAX_HEALTH;
+    private final int maxHealth;
 
     public Creature(String name, String image, int damage, int maxHealth) {
         this.name = name;
@@ -35,29 +34,13 @@ public class Creature {
         this.damage = damage;
         this.currentHealth = maxHealth;
         this.isAlive = true;
-        MAX_HEALTH = maxHealth;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void increaseDamage(int value) {
-        damage += value;
-    }
-
-    public void decreaseDamage(int value) {
-        damage = Math.max(0, damage - value);
-    }
-
-    public int getHealth() {
-        return currentHealth;
+        this.maxHealth = maxHealth;
     }
 
     public void heal(int amount) {
         currentHealth += amount;
-        if (currentHealth > MAX_HEALTH) {
-            currentHealth = MAX_HEALTH;
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
         }
     }
 
@@ -67,6 +50,22 @@ public class Creature {
             currentHealth = 0;
             isAlive = false;
         }
+    }
+
+    public void increaseDamage(int value) {
+        damage += value;
+    }
+
+    public void decreaseDamage(int value) {
+        damage = Math.max(1, damage - value);
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
     }
 
     public boolean isAlive() {
