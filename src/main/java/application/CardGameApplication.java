@@ -48,7 +48,6 @@ public class CardGameApplication extends Application {
         gamer.givePlayerCards(List.of(lion, chimera, fireBall, thunderBolt, razorSharpen, weakeningPoison));
 
         BattleManager battle = new BattleManager(gamer, slime);
-        battle.startBattle();
 
         view = new CardGameView(battle);
         Scene scene1 = new Scene(view.getRoot(), 1080, 740);

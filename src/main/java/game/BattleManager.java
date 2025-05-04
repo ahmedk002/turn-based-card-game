@@ -28,7 +28,7 @@ import creature.Creature;
  */
 public class BattleManager {
     private final Player player;
-    private final Creature enemyCreature;
+    private Creature enemyCreature;
     private boolean victoryStatus;
     private boolean defeatStatus;
 
@@ -187,6 +187,15 @@ public class BattleManager {
     private void checkDefeat() {
         defeatStatus = !player.isAlive() ||
                 (player.getSummonedCreatures().isEmpty() && player.getCurrentHand().isEmpty());
+    }
+
+    /**
+     * Changes the enemy creature to a new creature
+     *
+     * @param newCreature the new enemy Creature
+     */
+    public void setNewCreature(Creature newCreature) {
+        enemyCreature = newCreature;
     }
 
     public Player getPlayer() {

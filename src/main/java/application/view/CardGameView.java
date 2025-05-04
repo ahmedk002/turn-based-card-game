@@ -20,7 +20,6 @@ package application.view;
 import cards.Card;
 import creature.Creature;
 import game.BattleManager;
-import game.Player;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -28,6 +27,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class CardGameView {
     private Pane root;
@@ -37,7 +38,14 @@ public class CardGameView {
     private ImageView enemy;
     private HBox handDisplay;
     private VBox summonedCreaturesDisplay;
+    private VBox choiceBox;
+    private Label continueMessage;
+    private Label gameOver;
+    private Button yesButton;
+    private Button noButton;
+
     private final BattleManager battle;
+    private final List<Card> cardDeck;
 
     private final static int HAND_LOCATION = 550;
     private final static int CARD_WIDTH = 120;
@@ -50,6 +58,7 @@ public class CardGameView {
 
     public CardGameView(BattleManager battle) {
         this.battle = battle;
+        this.cardDeck = List.copyOf(battle.getPlayer().getPlayerDeck());
         initializeView();
     }
 
@@ -65,9 +74,9 @@ public class CardGameView {
     public void initializeView() {
         root = new Pane();
 
-        for (int i = 0; i < Player.getMaxCardsInHand(); i++) {
-            battle.getPlayer().drawCard();
-        }
+        battle.startBattle();
+
+        battle.getPlayer().drawInitialCards();
 
         // Enemy setup
         enemy = new ImageView(battle.getEnemyCreature().getImage());
@@ -113,6 +122,23 @@ public class CardGameView {
         summonedCreaturesDisplay = new VBox(CARD_SPACE);
         summonedCreaturesDisplay.relocate(CREATURES_LOCATION, FIRST_CREATURE_LOCATION);
         root.getChildren().add(summonedCreaturesDisplay);
+
+        // Continuation option
+        choiceBox = new VBox(10);
+        continueMessage = new Label("Would you like to try again?");
+        gameOver = new Label("Game Over");
+        gameOver.relocate(300, 400);
+        yesButton = new Button("Yes");
+        yesButton.setOnMouseClicked(event -> restartBattle());
+        noButton = new Button("No");
+        noButton.setOnMouseClicked(event -> {
+            choiceBox.setVisible(false);
+            root.getChildren().add(gameOver);
+        });
+        choiceBox.getChildren().addAll(List.of(continueMessage, yesButton, noButton));
+        choiceBox.relocate(300, 400);
+        root.getChildren().add(choiceBox);
+        choiceBox.setVisible(false);
     }
 
     /**
@@ -148,10 +174,32 @@ public class CardGameView {
         }
 
         if (battle.isVictory()) {
-            root.getChildren().remove(enemy);
-            root.getChildren().remove(skipButton);
+            enemy.setVisible(false);
+            continueMessage.setText("You Won!\n" + "Would you like to try again?");
+            endGame();
         } else if (battle.isDefeated()) {
-            root.getChildren().remove(skipButton);
+            continueMessage.setText("You Lose!\n" + "Would you like to try again?");
+            endGame();
         }
+    }
+
+    private void endGame() {
+        skipButton.setVisible(false);
+        handDisplay.setVisible(false);
+        choiceBox.setVisible(true);
+    }
+
+    private void restartBattle() {
+        battle.getPlayer().resetPlayer();
+        battle.getPlayer().givePlayerCards(cardDeck);
+        battle.setNewCreature(new Creature("Slime", "generic_slime.png", 5, 300));
+        enemy.setImage(new Image(battle.getEnemyCreature().getImage()));
+        choiceBox.setVisible(false);
+        enemy.setVisible(true);
+        skipButton.setVisible(true);
+        handDisplay.setVisible(true);
+        battle.getPlayer().drawInitialCards();
+        battle.startBattle();
+        updateBattleScreen();
     }
 }

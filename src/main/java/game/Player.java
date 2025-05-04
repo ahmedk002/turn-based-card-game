@@ -36,6 +36,9 @@ public class Player {
     /* Player's current health */
     private int currentHealth;
 
+    /* Player's max health */
+    private int maxHealth;
+
     /* Boolean to check if the player is alive */
     private boolean isAlive;
 
@@ -50,6 +53,7 @@ public class Player {
 
     public Player(int maxHealth) {
         currentHealth = maxHealth;
+        this.maxHealth = maxHealth;
         isAlive = true;
         currentHand = new ArrayList<>();
         playerDeck = new LinkedList<>();
@@ -106,6 +110,17 @@ public class Player {
     }
 
     /**
+     * Adds the recovery amount to current health
+     *
+     * @param recovery integer number of health recovered
+     *
+     * @author Nathan Ramkissoon
+     */
+    public void heal(int recovery) {
+        currentHealth = Math.min(maxHealth, currentHealth = recovery);
+    }
+
+    /**
      * Removes creatures from the summoned creatures list if they are defeated
      *
      * @author Nathan Ramkissoon
@@ -119,6 +134,25 @@ public class Player {
                 }
             }
             summonedCreatures = aliveCreatures;
+        }
+    }
+
+    /**
+     * Resets the player's status and removes all cards and creatures
+     */
+    public void resetPlayer() {
+        heal(50);
+        currentHand.clear();
+        playerDeck.clear();
+        summonedCreatures.clear();
+    }
+
+    /**
+     * Draw the player's initial hand to start the battle
+     */
+    public void drawInitialCards() {
+        for (int i = 0; i < MAX_CARDS_IN_HAND; i++) {
+            drawCard();
         }
     }
 
