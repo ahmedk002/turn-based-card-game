@@ -31,6 +31,7 @@ public class BattleManager {
     private Creature enemyCreature;
     private boolean victoryStatus;
     private boolean defeatStatus;
+    private final StringBuilder battleLog;
 
     /**
      * Constructor for the battle manager.
@@ -42,19 +43,7 @@ public class BattleManager {
         this.enemyCreature = enemyCreature;
         this.victoryStatus = false;
         this.defeatStatus = false;
-    }
-
-    /**
-     * Main turn order that is repeated to simulate the battle
-     *
-     * @author Nathan Ramkissoon
-     */
-    public void battleTurns(Card chosenCard) {
-        playerTurn(chosenCard);
-        checkVictory();
-        enemyTurn();
-        checkDefeat();
-        player.removeDefeatedCreatures();
+        battleLog = new StringBuilder();
     }
 
     /**
@@ -65,6 +54,24 @@ public class BattleManager {
     public void startBattle() {
         victoryStatus = false;
         defeatStatus = false;
+        battleLog.setLength(0);
+        battleLog.append("Battle started! Enemy: ").append(enemyCreature.getName()).append("\n");
+    }
+
+    /**
+     * The turn order that is executed upon the player selecting a card
+     *
+     * @param chosenCard Card that the user has selected for their turn
+     *
+     * @author Nathan Ramkissoon
+     */
+    public void battleTurns(Card chosenCard) {
+        battleLog.setLength(0);
+        playerTurn(chosenCard);
+        checkVictory();
+        enemyTurn();
+        checkDefeat();
+        player.removeDefeatedCreatures();
     }
 
     /**
@@ -91,6 +98,8 @@ public class BattleManager {
             return 0;
         }
 
+        battleLog.append("You played ").append(usedCard.getName()).append(".\n");
+
         // Initialized to 0, as status and creature cards do no damage
         int damageNumber = 0;
         // Checks what type the card is, and calls the correct method
@@ -102,12 +111,20 @@ public class BattleManager {
                 String cardEffect = usedStatusCard.getCardEffect().getEffect().toLowerCase();
                 if (cardEffect.contains("decrease")) {
                     usedStatusCard.useStatusCard(enemyCreature);
+
+                    battleLog.append(enemyCreature.getName()).append("'s ")
+                            .append(usedStatusCard.getCardEffect()).append("\n");
                 } else {
                     for (Creature summonedCreature : player.getSummonedCreatures()) {
                         usedStatusCard.useStatusCard(summonedCreature);
+
+                        battleLog.append(summonedCreature.getName()).append(" ")
+                                .append(usedStatusCard.getCardEffect()).append("\n");
                     }
                     if (cardEffect.contains("heal")) {
                         player.heal(usedStatusCard.getCardEffect().getStrengthValue());
+
+                        battleLog.append("Player ").append(usedStatusCard.getCardEffect()).append("\n");
                     }
                 }
                 if (!usedStatusCard.isReusable() && usedCard.isReusable()) {
@@ -118,6 +135,8 @@ public class BattleManager {
                 AttackCard usedAttackCard = (AttackCard) usedCard;
                 // The attack card's damage is collected
                 damageNumber = usedAttackCard.useAttackCard();
+
+                battleLog.append("You deal ").append(damageNumber).append(" damage.\n");
                 break;
             case CardType.CREATURE:
                 // If there are four summoned creatures already on the field,
@@ -127,8 +146,14 @@ public class BattleManager {
                     // Gets a creature from the card's information and adds it to the summoned creature list
                     Creature creature = usedCreatureCard.useCreatureCard();
                     player.getSummonedCreatures().add(creature);
+
+                    battleLog.append("You summoned ").append(creature.getName())
+                            .append(" with ").append(creature.getDamage()).append(" damage and ")
+                            .append(creature.getCurrentHealth()).append(" health.\n");
                 } else {
                     player.getPlayerDeck().add(usedCard);
+
+                    battleLog.append("You cannot summon more creatures");
                 }
                 break;
             default:
@@ -152,12 +177,17 @@ public class BattleManager {
      * @author Riley Chen
      */
     private void attack(int playerDamage) {
+        int totalDamage = playerDamage;
         enemyCreature.takeDamage(playerDamage);
         int creatureDamage;
         for (Creature creature : player.getSummonedCreatures()) {
             creatureDamage = creature.getDamage();
             enemyCreature.takeDamage(creatureDamage);
+            totalDamage += creatureDamage;
         }
+
+        battleLog.append("Enemy ").append(enemyCreature.getName())
+                .append(" took ").append(totalDamage).append(" damage.\n");
     }
 
     /**
@@ -178,9 +208,18 @@ public class BattleManager {
      */
     private void enemyTurn() {
         player.takeDamage(enemyCreature.getDamage());
+
+        battleLog.append("Enemy ").append(enemyCreature.getName()).append(" attacked you for ")
+                .append(enemyCreature.getDamage()).append(" damage.\n");
         if (!player.getSummonedCreatures().isEmpty()) {
+            battleLog.append("Enemy attacked ally creatures for ")
+                    .append(enemyCreature.getDamage()).append(" damage.\n");
+
             for (Creature summonedCreature : player.getSummonedCreatures()) {
                 summonedCreature.takeDamage(enemyCreature.getDamage());
+                if (!summonedCreature.isAlive()) {
+                    battleLog.append(summonedCreature.getName()).append(" was defeated...\n");
+                }
             }
         }
     }
@@ -215,4 +254,13 @@ public class BattleManager {
     }
 
     public boolean isDefeated() { return defeatStatus; }
+
+    /**
+     * Gets the battle log of the current turn.
+     *
+     * @return the battle message log as a string
+     */
+    public String getBattleLog() {
+        return battleLog.toString();
+    }
 }

@@ -22,6 +22,8 @@ import creature.Creature;
 import game.BattleManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -42,6 +44,7 @@ public class CardGameView {
     private VBox choiceBox;
     private Label continueMessage;
     private Label gameOver;
+    private TextArea battleLog;
     private Button yesButton;
     private Button noButton;
 
@@ -94,6 +97,14 @@ public class CardGameView {
         enemyHealthLabel.relocate(800, 20);
         root.getChildren().add(enemyHealthLabel);
 
+        // Battle log
+        battleLog = new TextArea();
+        battleLog.setEditable(false);
+        battleLog.setWrapText(true);
+        battleLog.setPrefSize(250, 200);
+        battleLog.relocate(50, 60);
+        root.getChildren().add(battleLog);
+
         // Skip button
         skipButton = new Button("SKIP TURN");
         skipButton.setOnMousePressed(event -> {
@@ -107,18 +118,6 @@ public class CardGameView {
         handDisplay = new HBox(CARD_SPACE);
         handDisplay.relocate(FIRST_HAND_CARD_LOCATION, HAND_LOCATION);
         root.getChildren().add(handDisplay);
-
-        for (int i = 0; i < battle.getPlayer().getCurrentHand().size(); i++) {
-            Card card = battle.getPlayer().getCurrentHand().get(i);
-            ImageView cardImage = new ImageView(new Image(card.getImage()));
-
-            cardImage.setOnMouseClicked(event -> {
-                battle.battleTurns(card);
-                updateBattleScreen();
-            });
-
-            handDisplay.getChildren().add(cardImage);
-        }
 
         // Summoned creatures
         summonedCreaturesDisplay = new VBox(CARD_SPACE);
@@ -141,6 +140,8 @@ public class CardGameView {
         choiceBox.relocate(400, 500);
         root.getChildren().add(choiceBox);
         choiceBox.setVisible(false);
+
+        updateBattleScreen();
     }
 
     /**
@@ -163,6 +164,9 @@ public class CardGameView {
                 updateBattleScreen();
             });
 
+            Tooltip tooltip = new Tooltip(card.getName());
+            Tooltip.install(cardImage, tooltip);
+
             handDisplay.getChildren().add(cardImage);
         }
 
@@ -174,6 +178,8 @@ public class CardGameView {
             creatureImage.setFitWidth(CARD_WIDTH * CREATURE_SCALE);
             summonedCreaturesDisplay.getChildren().add(creatureImage);
         }
+
+        battleLog.setText(battle.getBattleLog());
 
         if (battle.isVictory()) {
             wins++;
