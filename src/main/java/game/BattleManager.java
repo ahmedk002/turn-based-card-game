@@ -43,11 +43,11 @@ public class BattleManager {
         this.enemyCreature = enemyCreature;
         this.victoryStatus = false;
         this.defeatStatus = false;
-        battleLog = new StringBuilder();
+        this.battleLog = new StringBuilder();
     }
 
     /**
-     * Starts the battle — could later be expanded into turn-based logic.
+     * Starts the battle, which resets all battle statuses and the battle log.
      *
      * @author Muhammad Ahmed
      */
@@ -259,6 +259,8 @@ public class BattleManager {
      * Gets the battle log of the current turn.
      *
      * @return the battle message log as a string
+     *
+     * @author Muhammad Ahmed
      */
     public String getBattleLog() {
         return battleLog.toString();

@@ -183,8 +183,9 @@ public class CardGameView {
 
         if (battle.isVictory()) {
             wins++;
-            battle.getPlayer().setMaxHealth(battle.getPlayer().getMaxHealth() + 1);
             enemy.setVisible(false);
+            cardDeck.add((int) (Math.random() * cardDeck.size()), chooseRandomCard());
+            battle.getPlayer().setMaxHealth(battle.getPlayer().getMaxHealth() + 1);
             continueMessage.setText("You Won!\n" + "Would you like to try again?");
             endGame();
         } else if (battle.isDefeated()) {
@@ -201,7 +202,6 @@ public class CardGameView {
 
     private void restartBattle() {
         battle.getPlayer().resetPlayer();
-        cardDeck.add((int) (Math.random() * cardDeck.size()), chooseRandomCard());
         battle.getPlayer().givePlayerCards(cardDeck);
         battle.setNewCreature(chooseRandomCreature());
         enemy.setImage(new Image(battle.getEnemyCreature().getImage()));
@@ -230,8 +230,9 @@ public class CardGameView {
         Card boltmane = new CreatureCard("Boltmane", "boltmane.png", 25, 16);
         Card purifiedLily = new CreatureCard("Purified Lily", "purifiedlily.png", 8, 13);
         Card foxSage = new CreatureCard("Fox Sage", "foxsage.png", 20, 20);
+        Card healthPotion = new StatusCard("Health Potion", "healthpotion.png", CardEffect.HEAL_MED, false);
 
-        List<Card> cardList = List.of(florarsun, winterWarbler, fireBall, thunderStorm, razorSharpen, foxSage,
+        List<Card> cardList = List.of(florarsun, winterWarbler, fireBall, thunderStorm, razorSharpen, foxSage, healthPotion,
                 mummikat, geomancy, blizzard, behemoth, volcanasaur, darkBlast, boltmane, purifiedLily, weakeningPoison);
 
         return cardList.get((int) (Math.random() * cardList.size()));
