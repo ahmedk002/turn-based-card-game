@@ -128,7 +128,7 @@ public class CardGameView {
         choiceBox = new VBox(10);
         continueMessage = new Label("Would you like to try again?");
         gameOver = new Label("Game Over");
-        gameOver.relocate(400, 500);
+        gameOver.relocate(450, 550);
         yesButton = new Button("Yes");
         yesButton.setOnMouseClicked(event -> restartBattle());
         noButton = new Button("No");
@@ -136,8 +136,11 @@ public class CardGameView {
             choiceBox.setVisible(false);
             root.getChildren().add(gameOver);
         });
-        choiceBox.getChildren().addAll(List.of(continueMessage, yesButton, noButton));
-        choiceBox.relocate(400, 500);
+        HBox buttons = new HBox();
+        buttons.getChildren().addAll(List.of(yesButton, noButton));
+        buttons.setSpacing(10);
+        choiceBox.getChildren().addAll(List.of(continueMessage, buttons));
+        choiceBox.relocate(450, 550);
         root.getChildren().add(choiceBox);
         choiceBox.setVisible(false);
 
