@@ -18,7 +18,6 @@
 package game;
 
 import cards.*;
-import creature.Creature;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

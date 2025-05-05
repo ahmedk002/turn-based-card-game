@@ -18,7 +18,7 @@
 package application.view;
 
 import cards.*;
-import creature.Creature;
+import game.Creature;
 import game.BattleManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
