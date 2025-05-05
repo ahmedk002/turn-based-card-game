@@ -192,7 +192,7 @@ public class CardGameView {
     private void restartBattle() {
         battle.getPlayer().resetPlayer();
         battle.getPlayer().givePlayerCards(cardDeck);
-        battle.setNewCreature(new Creature("Slime", "generic_slime.png", 5, 300));
+        battle.setNewCreature(chooseRandomCreature());
         enemy.setImage(new Image(battle.getEnemyCreature().getImage()));
         choiceBox.setVisible(false);
         enemy.setVisible(true);
@@ -201,5 +201,18 @@ public class CardGameView {
         battle.getPlayer().drawInitialCards();
         battle.startBattle();
         updateBattleScreen();
+    }
+
+    private Creature chooseRandomCreature() {
+        Creature occulus = new Creature("Occulus", "occulus.png", 35, 1000);
+        Creature geist = new Creature("Geist", "geist.png", 10, 350);
+        Creature desertSpirit = new Creature("Desert Spirit", "desertspirit.png",20, 200);
+        Creature terrordactyl = new Creature("Terrordactyl", "terrordactyl.png", 25, 400);
+        Creature devilEnforcer = new Creature("Devil Enforcer", "devilenforcer.png", 45, 850);
+        Creature rockle = new Creature("Rockle", "rockle.png", 5, 100);
+        Creature cerulesect = new Creature("Cerulesect", "cerulesect.png", 15, 150);
+        List<Creature> creatureList = List.of(occulus, geist, desertSpirit, terrordactyl, devilEnforcer, rockle,
+                cerulesect);
+        return creatureList.get((int) (Math.random() * creatureList.size()));
     }
 }

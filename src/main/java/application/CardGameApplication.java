@@ -36,7 +36,7 @@ public class CardGameApplication extends Application {
 
     @Override
     public void start(Stage stage1) {
-        Player gamer = new Player(50);
+        Player gamer = new Player(100);
         Creature slime = new Creature("Slime", "generic_slime.png", 5, 300);
 
         Card razorSharpen = new StatusCard("Razor Sharpen", "razorsharpen.png", CardEffect.INCREASE_LOW, false);

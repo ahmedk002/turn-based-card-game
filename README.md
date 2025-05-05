@@ -44,4 +44,7 @@ may do so by clicking the "skip turn" button next to your hand.
 
 ## 3rd Party Libraries
 
+## Credits
+Creature sprites were made by AaronSprites: https://aaronsprites.itch.io/
+
 ## Video Presentation

@@ -98,12 +98,16 @@ public class BattleManager {
             case CardType.STATUS:
                 StatusCard usedStatusCard = (StatusCard) usedCard;
                 // If the card decreases damage, the effect is applied to the enemy
-                // If it buffs damage or heals, the effect is instead applied to allied summoned creatures
-                if (usedStatusCard.getCardEffect().getEffect().toLowerCase().contains("decrease")) {
+                // If it buffs damage or heals, the effect is instead applied to allied summoned creatures and the player
+                String cardEffect = usedStatusCard.getCardEffect().getEffect().toLowerCase();
+                if (cardEffect.contains("decrease")) {
                     usedStatusCard.useStatusCard(enemyCreature);
                 } else {
                     for (Creature summonedCreature : player.getSummonedCreatures()) {
                         usedStatusCard.useStatusCard(summonedCreature);
+                    }
+                    if (cardEffect.contains("heal")) {
+                        player.heal(usedStatusCard.getCardEffect().getStrengthValue());
                     }
                 }
                 if (!usedStatusCard.isReusable() && usedCard.isReusable()) {

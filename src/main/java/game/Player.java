@@ -141,7 +141,8 @@ public class Player {
      * Resets the player's status and removes all cards and creatures
      */
     public void resetPlayer() {
-        heal(50);
+        heal(maxHealth);
+        isAlive = true;
         currentHand.clear();
         playerDeck.clear();
         summonedCreatures.clear();
