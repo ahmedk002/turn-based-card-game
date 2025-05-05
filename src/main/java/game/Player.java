@@ -117,7 +117,7 @@ public class Player {
      * @author Nathan Ramkissoon
      */
     public void heal(int recovery) {
-        currentHealth = Math.min(maxHealth, currentHealth = recovery);
+        currentHealth = Math.min(maxHealth, currentHealth + recovery);
     }
 
     /**
@@ -139,6 +139,8 @@ public class Player {
 
     /**
      * Resets the player's status and removes all cards and creatures
+     *
+     * @author Nathan Ramkissoon
      */
     public void resetPlayer() {
         heal(maxHealth);
@@ -150,12 +152,16 @@ public class Player {
 
     /**
      * Draw the player's initial hand to start the battle
+     *
+     * @author Nathan Ramkissoon
      */
     public void drawInitialCards() {
         for (int i = 0; i < MAX_CARDS_IN_HAND; i++) {
             drawCard();
         }
     }
+
+    public void setMaxHealth(int newMaxHealth) {maxHealth = newMaxHealth;}
 
     public List<Card> getCurrentHand() {
         return currentHand;
@@ -167,6 +173,10 @@ public class Player {
 
     public int getCurrentHealth() {
         return currentHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public List<Creature> getSummonedCreatures() {

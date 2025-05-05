@@ -17,7 +17,7 @@
 
 package application.view;
 
-import cards.Card;
+import cards.*;
 import creature.Creature;
 import game.BattleManager;
 import javafx.scene.control.Button;
@@ -28,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardGameView {
@@ -46,6 +47,7 @@ public class CardGameView {
 
     private final BattleManager battle;
     private final List<Card> cardDeck;
+    private int wins;
 
     private final static int HAND_LOCATION = 550;
     private final static int CARD_WIDTH = 120;
@@ -58,7 +60,7 @@ public class CardGameView {
 
     public CardGameView(BattleManager battle) {
         this.battle = battle;
-        this.cardDeck = List.copyOf(battle.getPlayer().getPlayerDeck());
+        this.cardDeck = new ArrayList<>(List.copyOf(battle.getPlayer().getPlayerDeck()));
         initializeView();
     }
 
@@ -127,7 +129,7 @@ public class CardGameView {
         choiceBox = new VBox(10);
         continueMessage = new Label("Would you like to try again?");
         gameOver = new Label("Game Over");
-        gameOver.relocate(300, 400);
+        gameOver.relocate(400, 500);
         yesButton = new Button("Yes");
         yesButton.setOnMouseClicked(event -> restartBattle());
         noButton = new Button("No");
@@ -136,7 +138,7 @@ public class CardGameView {
             root.getChildren().add(gameOver);
         });
         choiceBox.getChildren().addAll(List.of(continueMessage, yesButton, noButton));
-        choiceBox.relocate(300, 400);
+        choiceBox.relocate(400, 500);
         root.getChildren().add(choiceBox);
         choiceBox.setVisible(false);
     }
@@ -174,6 +176,8 @@ public class CardGameView {
         }
 
         if (battle.isVictory()) {
+            wins++;
+            battle.getPlayer().setMaxHealth(battle.getPlayer().getMaxHealth() + 1);
             enemy.setVisible(false);
             continueMessage.setText("You Won!\n" + "Would you like to try again?");
             endGame();
@@ -191,6 +195,7 @@ public class CardGameView {
 
     private void restartBattle() {
         battle.getPlayer().resetPlayer();
+        cardDeck.add((int) (Math.random() * cardDeck.size()), chooseRandomCard());
         battle.getPlayer().givePlayerCards(cardDeck);
         battle.setNewCreature(chooseRandomCreature());
         enemy.setImage(new Image(battle.getEnemyCreature().getImage()));
@@ -203,14 +208,44 @@ public class CardGameView {
         updateBattleScreen();
     }
 
+    private Card chooseRandomCard() {
+        Card razorSharpen = new StatusCard("Razor Sharpen", "razorsharpen.png", CardEffect.INCREASE_LOW, false);
+        Card weakeningPoison = new StatusCard("Weakening Poison", "weakeningpoison.png", CardEffect.DECREASE_LOW, false);
+        Card fireBall = new AttackCard("Fire Ball", "fireball.png", 10);
+        Card thunderStorm = new AttackCard("Thunder Storm", "thunderstorm.png", 10);
+        Card geomancy = new AttackCard("Geomancy", "geomancy.png", 10);
+        Card blizzard = new AttackCard("Blizzard", "blizzard.png", 10);
+        Card darkBlast = new AttackCard("Dark Blast", "darkBlast.png", 15);
+        Card florarsun = new CreatureCard("Florasun", "florasun.png", 5, 10);
+        Card winterWarbler = new CreatureCard("Winter Warbler", "winterwarbler.png", 12, 15);
+        Card mummikat = new CreatureCard("Mummi-kat", "mummikat.png", 9, 99);
+        Card volcanasaur = new CreatureCard("Volcanasaur", "volcanasaur.png", 10, 20);
+        Card behemoth = new CreatureCard("Behe-Moth", "behemoth.png", 12, 34);
+        Card boltmane = new CreatureCard("Boltmane", "boltmane.png", 25, 16);
+        Card purifiedLily = new CreatureCard("Purified Lily", "purifiedlily.png", 8, 13);
+        Card foxSage = new CreatureCard("Fox Sage", "foxsage.png", 20, 20);
+
+        List<Card> cardList = List.of(florarsun, winterWarbler, fireBall, thunderStorm, razorSharpen, foxSage,
+                mummikat, geomancy, blizzard, behemoth, volcanasaur, darkBlast, boltmane, purifiedLily, weakeningPoison);
+
+        return cardList.get((int) (Math.random() * cardList.size()));
+    }
+
     private Creature chooseRandomCreature() {
-        Creature occulus = new Creature("Occulus", "occulus.png", 35, 1000);
-        Creature geist = new Creature("Geist", "geist.png", 10, 350);
-        Creature desertSpirit = new Creature("Desert Spirit", "desertspirit.png",20, 200);
-        Creature terrordactyl = new Creature("Terrordactyl", "terrordactyl.png", 25, 400);
-        Creature devilEnforcer = new Creature("Devil Enforcer", "devilenforcer.png", 45, 850);
-        Creature rockle = new Creature("Rockle", "rockle.png", 5, 100);
-        Creature cerulesect = new Creature("Cerulesect", "cerulesect.png", 15, 150);
+        Creature occulus = new Creature("Occulus", "occulus.png",
+                9 + wins / 2, 100 + 10 * wins);
+        Creature geist = new Creature("Geist", "geist.png",
+                9 + wins / 2, 70 + 10 * wins);
+        Creature desertSpirit = new Creature("Desert Spirit", "desertspirit.png",
+                7 + wins / 2, 45 + 10 * wins);
+        Creature terrordactyl = new Creature("Terrordactyl", "terrordactyl.png",
+                8 + wins / 2, 60 + 10 * wins);
+        Creature devilEnforcer = new Creature("Devil Enforcer", "devilenforcer.png",
+                10 + wins / 2, 85 + 10 * wins);
+        Creature rockle = new Creature("Rockle", "rockle.png",
+                4 + wins / 2, 30 + 10 * wins);
+        Creature cerulesect = new Creature("Cerulesect", "cerulesect.png",
+                6 + wins / 2, 50 + 10 * wins);
         List<Creature> creatureList = List.of(occulus, geist, desertSpirit, terrordactyl, devilEnforcer, rockle,
                 cerulesect);
         return creatureList.get((int) (Math.random() * creatureList.size()));
