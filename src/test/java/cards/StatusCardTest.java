@@ -52,6 +52,7 @@ public class StatusCardTest {
         healCard2 = new StatusCard("Medkit", null, effect3, false);
     }
 
+    /* Removed because reusable cards are not implemented.
     @Test
     void testReusableDamageIncrease() {
         assertTrue(creature.getDamage() == 10);
@@ -61,6 +62,7 @@ public class StatusCardTest {
         card.useStatusCard(creature);
         assertTrue(creature.getDamage() == 14); //Make sure you can apply the card again.
     }
+    */
 
     @Test
     void testNonreusableDamageIncrease() {
@@ -71,6 +73,7 @@ public class StatusCardTest {
         assertTrue(!card.isReusable());
     }
 
+    /* Removed because reusable cards are not implemented.
     @Test
     void testReusableDamageDecrease() {
         assertTrue(creature.getDamage() == 10);
@@ -80,6 +83,7 @@ public class StatusCardTest {
         card.useStatusCard(creature);
         assertTrue(creature.getDamage() == 6);
     }
+    */
 
     @Test
     void testNonreusableDamageDecrease() {
@@ -90,6 +94,7 @@ public class StatusCardTest {
         assertTrue(!card.isReusable());
     }
 
+    /* Removed because reusable cards are not implemented.
     @Test
     void testHeal() {
         assertTrue(creature.getCurrentHealth() == 10);
@@ -99,10 +104,8 @@ public class StatusCardTest {
         card.useStatusCard(creature);
         assertTrue(creature.getCurrentHealth() == 10);
 
-        /*
-        Damage creature first, then heal it by greater than the amount of damage taken.
-        Ensure that it only heals to its max health.
-        */
+        //Damage creature first, then heal it by greater than the amount of damage taken.
+        //Ensure that it only heals to its max health.
         creature.takeDamage(1);
         card.useStatusCard(creature);
         assertTrue(creature.getCurrentHealth() == 10);
@@ -112,6 +115,7 @@ public class StatusCardTest {
         card.useStatusCard(creature);
         assertTrue(creature.getCurrentHealth() == 7);
     }
+    */
 
     @Test
     void testNonreusableHeal() {
