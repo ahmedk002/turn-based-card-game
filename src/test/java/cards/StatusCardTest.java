@@ -17,7 +17,7 @@
 
 package cards;
 
-import creature.Creature;
+import game.Creature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,74 +55,74 @@ public class StatusCardTest {
     /* Removed because reusable cards are not implemented.
     @Test
     void testReusableDamageIncrease() {
-        assertTrue(creature.getDamage() == 10);
+        assertEquals(10, creature.getDamage());
         StatusCard card = (StatusCard) damageIncreaseCard1;
         card.useStatusCard(creature);
-        assertTrue(creature.getDamage() == 12); //Test applying the card.
+        assertEquals(15, creature.getDamage()); //Test applying the card.
         card.useStatusCard(creature);
-        assertTrue(creature.getDamage() == 14); //Make sure you can apply the card again.
+        assertEquals(20, creature.getDamage()); //Make sure you can apply the card again.
     }
     */
 
     @Test
     void testNonreusableDamageIncrease() {
-        assertTrue(creature.getDamage() == 10);
+        assertEquals(10, creature.getDamage());
         StatusCard card = (StatusCard) damageIncreaseCard2;
         card.useStatusCard(creature);
-        assertTrue(creature.getDamage() == 15);
-        assertTrue(!card.isReusable());
+        assertEquals(15, creature.getDamage());
+        assertFalse(card.isReusable());
     }
 
     /* Removed because reusable cards are not implemented.
     @Test
     void testReusableDamageDecrease() {
-        assertTrue(creature.getDamage() == 10);
+        assertEquals(10, creature.getDamage());
         StatusCard card = (StatusCard) damageDecreaseCard1;
         card.useStatusCard(creature);
-        assertTrue(creature.getDamage() == 8);
+        assertEquals(5, creature.getDamage());
         card.useStatusCard(creature);
-        assertTrue(creature.getDamage() == 6);
+        assertEquals(1, creature.getDamage());
     }
     */
 
     @Test
     void testNonreusableDamageDecrease() {
-        assertTrue(creature.getDamage() == 10);
+        assertEquals(10, creature.getDamage());
         StatusCard card = (StatusCard) damageDecreaseCard2;
         card.useStatusCard(creature);
-        assertTrue(creature.getDamage() == 5);
-        assertTrue(!card.isReusable());
+        assertEquals(5, creature.getDamage());
+        assertFalse(card.isReusable());
     }
 
     /* Removed because reusable cards are not implemented.
     @Test
     void testHeal() {
-        assertTrue(creature.getCurrentHealth() == 10);
+        assertEquals(10, creature.getCurrentHealth());
         StatusCard card = (StatusCard) healCard1;
 
         //Ensure that the creature cannot heal above its max health.
         card.useStatusCard(creature);
-        assertTrue(creature.getCurrentHealth() == 10);
+        assertEquals(10, creature.getCurrentHealth());
 
         //Damage creature first, then heal it by greater than the amount of damage taken.
         //Ensure that it only heals to its max health.
         creature.takeDamage(1);
         card.useStatusCard(creature);
-        assertTrue(creature.getCurrentHealth() == 10);
+        assertEquals(10, creature.getCurrentHealth());
 
         //Deal a lot of damage to the creature to test the exact amount it heals.
-        creature.takeDamage(5);
+        creature.takeDamage(8);
         card.useStatusCard(creature);
-        assertTrue(creature.getCurrentHealth() == 7);
+        assertEquals(7, creature.getCurrentHealth());
     }
     */
 
     @Test
     void testNonreusableHeal() {
-        assertTrue(creature.getCurrentHealth() == 10);
+        assertEquals(10, creature.getCurrentHealth());
         creature.takeDamage(6);
         StatusCard card = (StatusCard) healCard2;
         card.useStatusCard(creature);
-        assertTrue(creature.getCurrentHealth() == 9);
+        assertEquals(9, creature.getCurrentHealth());
     }
 }

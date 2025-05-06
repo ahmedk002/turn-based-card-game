@@ -18,7 +18,6 @@
 package game;
 
 import cards.*;
-import creature.Creature;
 
 /**
  * Manages battle state between a player and an enemy creature.

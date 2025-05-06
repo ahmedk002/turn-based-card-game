@@ -17,7 +17,7 @@
 
 package cards;
 
-import creature.Creature;
+import game.Creature;
 import game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -17,7 +17,7 @@
 
 package cards;
 
-import creature.Creature;
+import game.Creature;
 
 public class StatusCard extends Card {
     private final CardEffect cardEffect;

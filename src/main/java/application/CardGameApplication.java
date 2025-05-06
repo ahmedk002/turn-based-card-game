@@ -17,7 +17,7 @@ package application;/* *****************************************
 
 import application.view.CardGameView;
 import cards.*;
-import creature.Creature;
+import game.Creature;
 import game.BattleManager;
 import game.Player;
 import javafx.application.Application;

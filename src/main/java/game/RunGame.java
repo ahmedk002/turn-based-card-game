@@ -17,7 +17,6 @@ package game;/* *****************************************
  */
 
 import cards.*;
-import creature.*;
 
 import java.util.List;
 import java.util.Scanner;

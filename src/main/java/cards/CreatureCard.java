@@ -17,7 +17,7 @@
 
 package cards;
 
-import creature.Creature;
+import game.Creature;
 
 public class CreatureCard extends Card {
     private final int health;

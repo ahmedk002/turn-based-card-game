@@ -15,7 +15,7 @@
  * ****************************************
  */
 
-package creature;
+package game;
 
 /**
  * Represents a creature that can be summoned and used in battle.
