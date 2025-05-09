@@ -48,3 +48,4 @@ may do so by clicking the "skip turn" button next to your hand.
 Creature sprites were made by AaronSprites: https://aaronsprites.itch.io/
 
 ## Video Presentation
+https://mediaspace.bucknell.edu/media/CSCI205+2025SP+Team_11+Final+Project/1_1707dhhj
