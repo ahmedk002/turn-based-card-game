@@ -4,24 +4,17 @@ Lewisburg, PA
 
 ### Course Info
 Instructor: Lily Romano
+
 Semester: Spring 2025
 
 ## Team Information
-Scrum Master: Riley Chen
-* Class of 2028
-* Major: Computer Science/Political Science
+Scrum Master: Muhammad Ahmed
 
 Product Owner: Nathan Ramkissoon
-* Class of 2028
-* Major: Computer Science and Engineering
 
-Developer: Muhammed Ahmed
-* Class of 2026
-* Major: Computer Science and Film/Media Studies
+Developer: Riley Chen
 
 Developer: Junbo Feng
-* Class of 2027
-* Major: Computer Science and Engineering
 
 ## Project Information
 A turn-based card game where you use your deck to defeat an enemy creature that is barring your way. 
@@ -46,6 +39,3 @@ may do so by clicking the "skip turn" button next to your hand.
 
 ## Credits
 Creature sprites were made by AaronSprites: https://aaronsprites.itch.io/
-
-## Video Presentation
-https://mediaspace.bucknell.edu/media/CSCI205+2025SP+Team_11+Final+Project/1_1707dhhj
