@@ -14,7 +14,6 @@ Product Owner: Nathan Ramkissoon
 
 Developer: Riley Chen
 
-Developer: Junbo Feng
 
 ## Project Information
 A turn-based card game where you use your deck to defeat an enemy creature that is barring your way. 
