@@ -1,4 +1,4 @@
-# CSCI 205 - Software Engineering and Design
+# Software Engineering and Design
 Bucknell University
 Lewisburg, PA
 
